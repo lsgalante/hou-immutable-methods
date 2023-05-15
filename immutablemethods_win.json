@@ -1,0 +1,13 @@
+{
+	"env":
+	[
+		{
+			"HOUDINI_PATH":
+			"C:/Users/lucas/Dropbox/git/immutable_methods"
+		},
+		{
+			"PYTHONPATH": 
+			"C:/Users/lucas/Dropbox/git/immutable_methods/scripts"
+		}
+	]
+}
