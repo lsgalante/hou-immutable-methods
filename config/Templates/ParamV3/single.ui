@@ -1,0 +1,21 @@
+// Template: single
+PSI_TOKEN.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { PSI_LEADING_SPACE }
+
+#if PSI_USE_LABEL
+    PSI_TOKEN.label = PARM_LABEL("PSI_LABEL", "PSI_TOKEN") PSI_LABEL_SIZE;
+    PARM_FIELD(PSI_TYPE, "PSI_TOKEN") VALUE(PSI_TOKEN.val) 
+	LABELREF(PSI_TOKEN.label) HSTRETCH;
+#else
+    PARM_FIELD(PSI_TYPE, "PSI_TOKEN") VALUE(PSI_TOKEN.val) HSTRETCH;
+#endif
+
+#include "config/Templates/ParamV3/psi_menu.ui"
+#include "config/Templates/ParamV3/psi_exportable.ui"
+#include "config/Templates/ParamV3/psi_script_action.ui"
+
+    { PSI_TRAILING_SPACE }
+}

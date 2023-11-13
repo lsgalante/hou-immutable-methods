@@ -1,0 +1,5 @@
+// Include for menu button
+
+#if PSI_MENU
+    PSI_TOKEN.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+#endif

@@ -1,0 +1,58 @@
+// Template: MultiScroll
+
+PSI_TOKEN.parm =
+{
+    LAYOUT(horizontal) SPACING(0.02) HSTRETCH JUSTIFY(left, center)
+
+#if PSI_USE_LABEL
+    PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN") PSI_LABEL_SIZE;
+    { WIDTH(0.06) }
+#endif
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(PSI_TOKEN.val) 
+
+	PSI_TOKEN.field = PARM_FIELD(integer, "PSI_TOKEN") 
+		VALUE(PSI_TOKEN.val) HSTRETCH(0.5) PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(PSI_TOKEN.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(PSI_TOKEN.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+	}
+
+	ACTION_BUTTON "Clear" VALUE(PSI_TOKEN.clear.val);
+    }
+
+
+    { HSTRETCH }
+}
+
+PSI_TOKEN.multiscroll = SCROLLREGION
+{
+    LAYOUT(vertical) HSTRETCH LOOK(line2) 
+	MARGIN(0.05) SCROLLVALUE(PSI_TOKEN.scrollx.val, PSI_TOKEN.scrolly.val)
+}
+
+PSI_TOKEN.gad =
+{
+    LAYOUT(vertical) STRETCH SPACING(0.02)
+    HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN)
+
+    PSI_TOKEN.parm;
+    {
+	LAYOUT(horizontal) STRETCH
+	    
+        PSI_TOKEN.multiscroll;
+
+	// NB: Cannot use a tight scrollbar with a scroll region not specifying
+	//     a minimum height.  See BUG 70362.
+	SCROLLBAR VALUE(PSI_TOKEN.scrolly.val) 
+	    LAYOUT(vertical) WIDTH(0.1) HSTRETCH;
+    }
+}

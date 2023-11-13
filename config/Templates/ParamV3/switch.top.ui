@@ -1,0 +1,5 @@
+PSI_TOKEN.join = SWITCHER		 // Template: switch.top
+{
+  LAYOUT(overlap) HSTRETCH LOOK(none) VALUE(PSI_PREV.val)
+
+

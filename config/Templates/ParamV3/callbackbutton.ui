@@ -1,0 +1,29 @@
+// Template: callbackbutton
+PSI_TOKEN.gad = ROW
+{
+    JUSTIFY(left, center)
+    { PSI_LEADING_SPACE }
+
+#if PSI_BUTTON_ICON_SET
+
+#if PSI_USE_LABEL
+    PSI_TOKEN.label = PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN")
+	PSI_LABEL_SIZE;
+    { WIDTH(0.1) }
+#endif
+    PARM_BUTTON("PSI_TOKEN", "", "PSI_BUTTON_ICON")
+	push VALUE(PSI_TOKEN.val) UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+#else
+
+#if PSI_INDENT_PARM
+    { PSI_LABEL_SIZE }
+    { WIDTH(0.1) }
+#endif
+    PARM_BUTTON("PSI_TOKEN", "PSI_LABEL")
+	push VALUE(PSI_TOKEN.val);
+
+#endif
+    { PSI_TRAILING_SPACE }
+}
+

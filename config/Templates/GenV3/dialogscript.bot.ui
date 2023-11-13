@@ -1,0 +1,11 @@
+// dialogscript.bot.ui
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(plain) VALUE(open.val_)
+	HSTRETCH JUSTIFY(right, center)
+     
+    ACTION_MENU_BUTTON "Presets" MENU(PSI_PRESET);
+
+    dialog_norm.gad;
+}

@@ -1,0 +1,21 @@
+{
+    "nodetype" : "top",
+
+    "flagmapping" : {
+	"0" : {
+	    "flag" : "b",
+	    "color" : "GraphBypassFlag",
+	    "icon" : "NETVIEW_bypass_flag"
+	},
+	"1" : {
+	    "flag" : "l",
+	    "color" : "GraphLockFlag",
+	    "icon" : "NETVIEW_lock_flag"
+	},
+	"3" : {
+	    "flag" : "d",
+	    "color" : "GraphOutputFlag",
+	    "icon" : "NETVIEW_output_flag"
+	}
+    }
+}

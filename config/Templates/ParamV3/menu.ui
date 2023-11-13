@@ -1,0 +1,38 @@
+// Template: menu
+
+#if PSI_MINI
+
+PSI_TOKEN.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    { PSI_LEADING_SPACE }
+
+    PSI_TOKEN.menu LOOK(menuiconbutton) SIZE(0.26, 0.26);
+#include "config/Templates/ParamV3/psi_script_action.ui"
+}
+
+#else
+
+PSI_TOKEN.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) PSI_STRETCH
+    { PSI_LEADING_SPACE }
+
+#if PSI_USE_LABEL
+    PSI_TOKEN.label = PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN") PSI_LABEL_SIZE;
+    { WIDTH(0.09) }
+#endif
+
+    PSI_TOKEN.menu;
+
+    { PSI_STRETCH }
+
+#include "config/Templates/ParamV3/psi_exportable.ui"
+#include "config/Templates/ParamV3/psi_script_action.ui"
+
+    { PSI_TRAILING_SPACE }
+}
+
+#endif
+
+

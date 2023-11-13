@@ -1,0 +1,5 @@
+    // tabgroup.top.ui
+    TABDIALOG2 flat "PSI_TOKEN"
+    { 
+	VALUE(PSI_TOKEN.val) STRETCH(1,0)
+

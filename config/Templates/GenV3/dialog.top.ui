@@ -1,0 +1,6 @@
+// Magic: PSI_MAGIC
+// Automatically generated PSI dialog (PSI version PSI_VERSION)
+// PSI_DATE
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+

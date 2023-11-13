@@ -1,0 +1,16 @@
+{
+    "nodetype" : "obj",
+
+    "flagmapping" : {
+	"0" : {
+	    "flag" : "S",
+	    "color" : "GraphSelectableFlag",
+	    "icon" : "NETVIEW_selectable_flag"
+	},
+	"3" : {
+	    "flag" : "d",
+	    "color" : "GraphDisplayFlag",
+	    "icon" : "NETVIEW_display_flag"
+	}
+    }
+}

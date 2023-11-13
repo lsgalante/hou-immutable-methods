@@ -1,0 +1,21 @@
+// Template: color_swatch
+
+PSI_TOKEN.gad = 
+{
+    LAYOUT (horizontal) HSTRETCH
+    { PSI_LEADING_SPACE }
+
+#if PSI_USE_LABEL
+    PSI_TOKEN.label = PARM_LABEL("PSI_LABEL", "PSI_TOKEN") PSI_LABEL_SIZE;
+    PARM(PSI_TYPE, PSI_SIZE, "PSI_TOKEN", none, COLOR, "PSI_SUB_LABELS") 
+	LABELREF(PSI_TOKEN.label) HSTRETCH;
+#else
+    PARM(PSI_TYPE, PSI_SIZE, "PSI_TOKEN", none, COLOR, "PSI_SUB_LABELS")
+	HSTRETCH;
+#endif
+
+#include "config/Templates/ParamV3/psi_exportable.ui"
+#include "config/Templates/ParamV3/psi_script_action.ui"
+
+    { PSI_TRAILING_SPACE }
+}

@@ -1,0 +1,10 @@
+// simplegroup.top.ui
+PSI_TOKEN = 
+#if PSI_LOOK_BLANK
+{
+    VALUE(PSI_TOKEN.val) LAYOUT(vertical) HSTRETCH SPACING(0.02)
+#else
+GROUP simple "PSI_LABEL" PSI_LOOK_FLAT PSI_HEADER_TOGGLE
+{ 
+    VALUE(PSI_TOKEN.val) LAYOUT(vertical) HSTRETCH 
+#endif

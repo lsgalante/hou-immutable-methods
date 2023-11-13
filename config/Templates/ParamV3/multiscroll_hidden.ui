@@ -1,0 +1,17 @@
+// Template: MultiScroll (hidden)
+
+PSI_TOKEN.multiscroll = SCROLLREGION
+{
+    LAYOUT(vertical) HSTRETCH HEIGHT(PSI_MULTISIZE) LOOK(line2) 
+	MARGIN(0.05) SCROLLVALUE(PSI_TOKEN.scrollx.val, PSI_TOKEN.scrolly.val)
+}
+
+PSI_TOKEN.gad =
+{
+    LAYOUT(horizontal) STRETCH
+	    
+    PSI_TOKEN.multiscroll;
+
+    SCROLLBAR VALUE(PSI_TOKEN.scrolly.val) LAYOUT(vertical) WIDTH(0.1)
+	 VSTRETCH;
+}

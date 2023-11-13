@@ -1,0 +1,22 @@
+// Template: command
+
+PSI_TOKEN.gad = ROW
+{
+    HSTRETCH JUSTIFY(left,center)
+
+#if PSI_USE_LABEL
+    PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN") PSI_LABEL_SIZE;
+    { WIDTH(0.1) }
+#endif
+    STRING_FIELD VALUE(PSI_TOKEN.val) HSTRETCH;
+
+#include "config/Templates/ParamV3/psi_menu.ui"
+
+    ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(PSI_TOKEN.plus) LOOKFLAT
+	UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+#include "config/Templates/ParamV3/psi_script_action.ui"
+}
+
+
+

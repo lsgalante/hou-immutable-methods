@@ -1,0 +1,12 @@
+// Template: MultiSwitch_hidden
+PSI_TOKEN.multiswitch =
+{
+    LAYOUT(vertical) STRETCH(1,1) 
+}
+
+PSI_TOKEN.gad =
+{
+    LAYOUT(vertical) STRETCH(1, 1)
+	    
+    PSI_TOKEN.multiswitch;
+}

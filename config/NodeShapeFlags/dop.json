@@ -1,0 +1,21 @@
+{
+    "nodetype" : "dop",
+
+    "flagmapping" : {
+	"0" : {
+	    "flag" : "b",
+	    "color" : "GraphBypassFlag",
+	    "icon" : "NETVIEW_bypass_flag"
+	},
+	"1" : {
+	    "flag" : "t",
+	    "color" : "GraphHiddenFlag",
+	    "icon" : "NETVIEW_hidden_flag"
+	},
+	"3" : {
+	    "flag" : "d",
+	    "color" : "GraphOutputFlag",
+	    "icon" : "NETVIEW_output_flag"
+	}
+    }
+}

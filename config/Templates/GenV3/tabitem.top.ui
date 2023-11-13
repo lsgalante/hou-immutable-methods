@@ -1,0 +1,10 @@
+	// tabitem.top.ui
+	TAB "PSI_LABEL"
+	{
+	    LAYOUT(vertical) STRETCH
+#if PSI_NESTED_SWITCHER
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+#else
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+#endif
+

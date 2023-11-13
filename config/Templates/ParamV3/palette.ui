@@ -1,0 +1,18 @@
+// Template: palette
+PSI_TOKEN.gad =
+{
+ LAYOUT(horizontal) HSTRETCH
+
+#if PSI_USE_LABEL
+     PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN") WIDTH(1.5);
+    { WIDTH(0.1) }
+#endif
+
+ COLORPALETTE "$HFS/houdini/config/colorPalette.def" 
+       VALUE(PSI_TOKEN.val[0], PSI_TOKEN.val[1], PSI_TOKEN.val[2]) 
+       HSTRETCH MIN_HEIGHT(0.62);
+
+#include "config/Templates/ParamV3/psi_script_action.ui"
+}
+
+

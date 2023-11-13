@@ -1,0 +1,65 @@
+// Template: editor
+
+PSI_TOKEN.gad = ROW
+{
+#if PSI_STANDARD_PARMS
+#if PSI_USE_LABEL
+    LAYOUT(overlap) HSTRETCH JUSTIFY(right, top)
+    HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN) NO_MARGIN_SPACING_SCALE
+
+    {
+	LAYOUT(horizontal) JUSTIFY(right, top)
+	#include "config/Templates/ParamV3/psi_script_action.ui"
+	#include "config/Templates/ParamV3/psi_exportable.ui"
+	#include "config/Templates/ParamV3/psi_menu.ui"
+    }
+
+    {
+	LAYOUT(vertical) HSTRETCH JUSTIFY(left, top)
+
+	PSI_TOKEN.label = PARM_LABEL("PSI_LABEL", "PSI_TOKEN");
+	{ HEIGHT(0.06) }
+
+	MULTILINE_PARM_FIELD ("PSI_TOKEN")
+	    LABELREF(PSI_TOKEN.label)
+	    VALUE(PSI_TOKEN.val)
+	    SYNTAX(PSI_EDITOR_LANG)
+	    LINES(PSI_EDITOR_LINES)
+	    HSTRETCH;
+    }
+
+#else // No label
+    HSTRETCH JUSTIFY(left, top)
+    HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN) NO_MARGIN_SPACING_SCALE
+
+    MULTILINE_PARM_FIELD ("PSI_TOKEN")
+    VALUE(PSI_TOKEN.val)
+    SYNTAX(PSI_EDITOR_LANG)
+    LINES(PSI_EDITOR_LINES)
+    HSTRETCH;
+
+    {
+	#include "config/Templates/ParamV3/psi_menu.ui"
+	#include "config/Templates/ParamV3/psi_exportable.ui"
+	#include "config/Templates/ParamV3/psi_script_action.ui"
+    }
+
+#endif
+
+#else // Use a single line field for the toolbox
+    LAYOUT(horizontal) HSTRETCH
+
+#if PSI_USE_LABEL
+    PSI_TOKEN.label = PARM_LABEL("PSI_LABEL", "PSI_TOKEN");
+    PARM(PSI_TYPE, 1, "PSI_TOKEN", none, field) RANGE(PSI_MIN,PSI_MAX)
+	PSI_RANGE_LOCK LABELREF(PSI_TOKEN.label) HSTRETCH;
+#else
+    PARM(PSI_TYPE, 1, "PSI_TOKEN", none, PSI_EXTRA) RANGE(PSI_MIN,PSI_MAX)
+	PSI_RANGE_LOCK HSTRETCH;
+#endif
+    #include "config/Templates/ParamV3/psi_menu.ui"
+    #include "config/Templates/ParamV3/psi_exportable.ui"
+    #include "config/Templates/ParamV3/psi_script_action.ui"
+#endif
+}
+

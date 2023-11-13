@@ -1,0 +1,16 @@
+{
+    "nodetype" : "vop",
+
+    "flagmapping" : {
+	"0" : {
+	    "flag" : "D",
+	    "color" : "GraphDebugFlag",
+	    "icon" : "NETVIEW_debug_flag"
+	},
+	"3" : {
+	    "flag" : "b",
+	    "color" : "GraphBypassFlag",
+	    "icon" : "NETVIEW_bypass_flag"
+	}
+    }
+}

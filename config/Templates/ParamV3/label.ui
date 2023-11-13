@@ -1,0 +1,308 @@
+// Template: label
+
+#if PSI_LOOK_HEADING
+
+PSI_TOKEN.gad =
+{
+    LAYOUT(vertical) SPACING(1p) HSTRETCH VMARGIN(0.05, 0)
+    HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN) NO_MARGIN_SPACING_SCALE
+    {
+         LAYOUT(horizontal) HSTRETCH
+         { WIDTH(0.05) }
+         LABEL VALUE(PSI_TOKEN.val[0]) HSTRETCH;
+    }
+    SEPARATOR HEIGHT(0.02) BGCOLOR("GroupHeaderOpen0") LOOKFLAT;
+    { HEIGHT(0.05) }
+}
+
+#elif PSI_LOOK_BLOCK
+
+PSI_TOKEN.gad =
+{
+    LAYOUT(vertical) SPACING(1p) HSTRETCH VMARGIN(0.05, 0)
+    HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN) NO_MARGIN_SPACING_SCALE
+    {
+        LAYOUT(horizontal) HSTRETCH
+        { PSI_LABEL_SIZE }
+        { WIDTH(0.08) }
+        LABEL VALUE(PSI_TOKEN.val[0]) HSTRETCH;
+    }
+    { HEIGHT(0.05) }
+}
+
+#else
+
+PSI_TOKEN.sval := PSI_SIZE;
+
+#define LABELFIELD(val) LABEL VALUE(val) JUSTIFY(center,center) HSTRETCH
+
+PSI_TOKEN.gad = 
+{
+    LAYOUT(vertical) SPACING(1p) HSTRETCH VMARGIN(0.05, 0)
+    HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN) NO_MARGIN_SPACING_SCALE
+
+    SWITCHER tight
+    {
+	VALUE(PSI_TOKEN.sval) HSTRETCH
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+	    LABEL "PSI_LABEL" HSTRETCH;
+#endif
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+            LABELFIELD(PSI_TOKEN.val[10]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+            LABELFIELD(PSI_TOKEN.val[10]);
+            LABELFIELD(PSI_TOKEN.val[11]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+            LABELFIELD(PSI_TOKEN.val[10]);
+            LABELFIELD(PSI_TOKEN.val[11]);
+            LABELFIELD(PSI_TOKEN.val[12]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+            LABELFIELD(PSI_TOKEN.val[10]);
+            LABELFIELD(PSI_TOKEN.val[11]);
+            LABELFIELD(PSI_TOKEN.val[12]);
+            LABELFIELD(PSI_TOKEN.val[13]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+            LABELFIELD(PSI_TOKEN.val[10]);
+            LABELFIELD(PSI_TOKEN.val[11]);
+            LABELFIELD(PSI_TOKEN.val[12]);
+            LABELFIELD(PSI_TOKEN.val[13]);
+            LABELFIELD(PSI_TOKEN.val[14]);
+        }
+
+        {
+            LAYOUT(horizontal) HSTRETCH
+#if PSI_USE_LABEL
+            LABEL "PSI_LABEL":1.5 JUSTIFY(right, center);
+#endif
+            LABELFIELD(PSI_TOKEN.val[0]);
+            LABELFIELD(PSI_TOKEN.val[1]);
+            LABELFIELD(PSI_TOKEN.val[2]);
+            LABELFIELD(PSI_TOKEN.val[3]);
+            LABELFIELD(PSI_TOKEN.val[4]);
+            LABELFIELD(PSI_TOKEN.val[5]);
+            LABELFIELD(PSI_TOKEN.val[6]);
+            LABELFIELD(PSI_TOKEN.val[7]);
+            LABELFIELD(PSI_TOKEN.val[8]);
+            LABELFIELD(PSI_TOKEN.val[9]);
+            LABELFIELD(PSI_TOKEN.val[10]);
+            LABELFIELD(PSI_TOKEN.val[11]);
+            LABELFIELD(PSI_TOKEN.val[12]);
+            LABELFIELD(PSI_TOKEN.val[13]);
+            LABELFIELD(PSI_TOKEN.val[14]);
+            LABELFIELD(PSI_TOKEN.val[15]);
+        }
+
+    }
+}
+
+#undef LABELFIELD
+
+#endif

@@ -1,0 +1,19 @@
+// Template: menu.jumper
+PSI_TOKEN.gad = 
+{
+ LAYOUT(horizontal) JUSTIFY(left, center)
+
+#if PSI_USE_LABEL
+   PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN") PSI_LABEL_SIZE;
+   { WIDTH(0.1) }
+#endif
+
+ PSI_TOKEN.menu HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(PSI_TOKEN.jump) LOOKFLAT
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+#include "config/Templates/ParamV3/psi_script_action.ui"
+}
+

@@ -1,0 +1,27 @@
+// Template: toggle
+
+PSI_TOKEN.gad = ROW
+{
+    PSI_STRETCH
+    { PSI_LEADING_SPACE }
+
+#if PSI_USE_LABEL
+#if PSI_INDENT_PARM
+    { PSI_LABEL_SIZE }
+    { WIDTH(0.08) }
+#endif
+    PARM_BUTTON("PSI_TOKEN", "PSI_LABEL") toggle VALUE(PSI_TOKEN.val);
+#else
+    PARM_BUTTON("PSI_TOKEN", "") toggle VALUE(PSI_TOKEN.val);
+#endif
+
+    { PSI_STRETCH }
+
+#include "config/Templates/ParamV3/psi_exportable.ui"
+#include "config/Templates/ParamV3/psi_script_action.ui"
+
+    { PSI_TRAILING_SPACE }
+}
+
+#undef STRETCH_AMOUNT
+

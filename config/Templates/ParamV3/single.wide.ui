@@ -1,0 +1,41 @@
+// Template: single.wide
+
+#if PSI_STANDARD_PARMS
+
+PSI_TOKEN.gad = 
+{
+ LAYOUT(vertical) STRETCH(1,0)
+
+#if PSI_USE_LABEL
+ PARM_LABEL_SIMPLE("PSI_LABEL", "PSI_TOKEN");
+#endif
+
+ {
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_FIELD (PSI_TYPE, "PSI_TOKEN") VALUE(PSI_TOKEN.val) HSTRETCH;
+
+#include "config/Templates/ParamV3/psi_menu.ui"
+#include "config/Templates/ParamV3/psi_script_action.ui"
+ }
+}
+
+#else // wide doesn't apply to toolbox parms
+
+PSI_TOKEN.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+#if PSI_USE_LABEL
+  PSI_TOKEN.label = PARM_LABEL("PSI_LABEL", "PSI_TOKEN");
+  PARM_FIELD(PSI_TYPE, "PSI_TOKEN") VALUE(PSI_TOKEN.val) 
+	LABELREF(PSI_TOKEN.label) HSTRETCH;
+#else
+  PARM_FIELD(PSI_TYPE, "PSI_TOKEN") VALUE(PSI_TOKEN.val) HSTRETCH;
+#endif
+
+#include "config/Templates/ParamV3/psi_menu.ui"
+#include "config/Templates/ParamV3/psi_script_action.ui"
+}
+
+#endif
