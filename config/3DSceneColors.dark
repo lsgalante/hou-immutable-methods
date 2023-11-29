@@ -1,6 +1,7 @@
 BackgroundColor:	0.00 0.00 0.00	# background color 
 BackgroundBottomColor:	@BackgroundColor # background color at bottom of view
 WireframeColor:		0.80 0.80 0.73	# non-selected primitives
+WireframeColor:     0.20 0.20 0.20
 WireOverColor:		0.20 0.20 0.20  # color of wires in Wire Shaded modes
 GhostFillColor:		0.30 0.30 0.30	# hidden-line ghost fill
 SelectedPrimColor:  1.00 0.80 0.30  # selected primitives

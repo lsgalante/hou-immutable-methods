@@ -1,7 +1,9 @@
 BackgroundColor:	0.40 0.5 0.55	# viewer background
 BackgroundBottomColor:	0.75 0.78 0.78	# background at the bottom of viewport
 WireframeColor:		0.15 0.15 0.15	# wireframe line color
+WireframeColor:		1    0    0
 WireOverColor:		0.15 0.15 0.15  # color of wires in Wire Shaded modes
+WireOverColor:		1    0    0
 GhostFillColor:		0.30 0.30 0.30	# hidden-line ghost fill
 SelectedPrimColor:	1.00 0.80 0.30	# selected primitives
 AuxSelectedPrimColor1:	1.00 1.00 0.00	# selected primitives in first tmp. sel
