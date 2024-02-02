@@ -9,125 +9,116 @@
 
 // <font name> [<bold|italic|bold-italic>] <size>
 
-DefaultFont:			Proportional MEDIUM
+DefaultFont:					Proportional MEDIUM
 
-HelpCardFont:       	Proportional MEDIUM
+HelpCardFont:       			Proportional MEDIUM
+InfoCardFont:					Fixed MEDIUM
 
-InfoCardFont:			Fixed MEDIUM
+PaperFont:						Proportional SMALL
 
-PaperFont:				Proportional SMALL
+NotifierFont:					Proportional MEDIUM
+NotifierHeadingFont:			Proportional Bold MEDIUM
 
-NotifierFont:			Proportional MEDIUM
+OpListFont:						Proportional MEDIUM
+OpListTitleFont:				Proportional MEDIUM
 
-NotifierHeadingFont:	Proportional Bold MEDIUM
+VopInOutLabelFont:				Proportional SMALL
 
-OpListFont:				Proportional MEDIUM
-OpListTitleFont:		Proportional MEDIUM
+SpreadsheetFont:				Fixed MEDIUM
+SpreadsheetTitleFont:			Proportional MEDIUM
 
-VopInOutLabelFont:		Proportional SMALL
+ListFont:						Proportional MEDIUM
+ListTitleFont:					Proportional MEDIUM
 
-SpreadsheetFont:		Fixed MEDIUM
-SpreadsheetTitleFont:	Proportional MEDIUM
+ButtonFont:						Proportional MEDIUM
 
-ListFont:				Proportional MEDIUM
-ListTitleFont:			Proportional MEDIUM
+LabelFont:						Proportional MEDIUM
 
-ButtonFont:				Proportional MEDIUM
+HeadingFont:					Proportional Bold MEDIUM
 
-LabelFont:				Proportional MEDIUM
+HotkeyFont:						Proportional Italic MEDIUM
 
-HeadingFont:			Proportional Bold MEDIUM
+TitleFont:						Proportional MEGAHUGE
 
-HotkeyFont:				Proportional Italic MEDIUM
+MenuFont:						Proportional LARGE
 
-TitleFont:				Proportional MEGAHUGE
+InputSmallFont:					Fixed MEDIUM_SMALL
+InputFont:						Fixed MEDIUM
 
-MenuFont:				Proportional LARGE
+DopeSheetFont:					Proportional MEDIUM_SMALL
+DopeSheetLargeFont:				Proportional LARGE
 
-InputSmallFont:			Fixed MEDIUM_SMALL
-InputFont:				Fixed MEDIUM
+OffDefaultParmFont:				Fixed Bold MEDIUM
 
-DopeSheetFont:			Proportional MEDIUM_SMALL
-DopeSheetLargeFont:		Proportional LARGE
+CompositorFont:					Proportional LARGE
+CompositorRulerFont:			Proportional TINY
+CompositorSmallFont:			Proportional MEDIUM
+CompositorSmallerFont:			Proportional SMALL
+CompositorInspectFont:			Fixed MEDIUM_SMALL
 
-OffDefaultParmFont:		Fixed Bold MEDIUM
+TreeFont:						Proportional MEDIUM
+TreeFontBold:					Proportional Bold MEDIUM
+TreeFontItalic:					Proportional Italic MEDIUM
+TreeFontBoldItalic:				Proportional Bold-Italic MEDIUM
 
-CompositorFont:			Proportional LARGE
-CompositorRulerFont:	Proportional TINY
-CompositorSmallFont:	Proportional MEDIUM
-CompositorSmallerFont:	Proportional SMALL
-CompositorInspectFont:	Fixed MEDIUM_SMALL
+PerfMonFont:					Proportional MEDIUM
 
-TreeFont:				Proportional MEDIUM
-TreeFontBold:			Proportional Bold MEDIUM
-TreeFontItalic:			Proportional Italic MEDIUM
-TreeFontBoldItalic:		Proportional Bold-Italic MEDIUM
+FinePrintFont:					Proportional TINY
 
-PerfMonFont:			Proportional MEDIUM
+BoldFont:						Proportional Bold MEDIUM
+BoldFontLarge:					Proportional Bold LARGE
 
-FinePrintFont:			Proportional TINY
+TextareaFont					Fixed LARGE
+TextportFont					Fixed LARGE
 
-BoldFont:				Proportional Bold MEDIUM
-BoldFontLarge:			Proportional Bold LARGE
+HandleFont						Proportional SMALL
 
-TextareaFont			Fixed LARGE
-TextportFont			Fixed LARGE
+GraphFont						Fixed MEDIUM
 
-HandleFont				Proportional SMALL
+LadderFont						Proportional MEDIUM
 
-GraphFont				Fixed MEDIUM
+NetworkFont:					Proportional MEDIUM
 
-LadderFont				Proportional MEDIUM
+PaneTabFont:					Proportional MEDIUM_SMALL
+PaneTabNetFont:					Proportional Italic MEDIUM_SMALL
+PaneTabPinnedFont:				Proportional Bold MEDIUM_SMALL
 
-NetworkFont:			Proportional MEDIUM
+ShelfTabFont:					Proportional SMALL
+ShelfItemFont:					Proportional SMALL
+ShelfItemTinyFont:				Proportional TINY
+ShelfTextItemFont:				Proportional MEDIUM
 
-PaneTabFont:			Proportional MEDIUM_SMALL
-PaneTabNetFont:			Proportional Italic MEDIUM_SMALL
-PaneTabPinnedFont:		Proportional Bold MEDIUM_SMALL
+PathGadgetFont:					Proportional MEDIUM
 
-ShelfTabFont:			Proportional SMALL
+StateLabelFont:					Proportional Bold MEDIUM
 
-ShelfItemFont:			Proportional SMALL
-ShelfItemTinyFont:		Proportional TINY
-ShelfTextItemFont:		Proportional MEDIUM
+WorksheetLabelFont:				Black 16
+WorksheetPerfMonLabelFont:		Black 12
 
-PathGadgetFont:			Proportional MEDIUM
+ViewportFont:					Proportional MEDIUM
+ViewportTimeFont:				Black 20
+ViewportInfoFont:				Fixed MEDIUM
+ViewportInspectFont:			Fixed MEDIUM_SMALL
 
-StateLabelFont:			Proportional Bold MEDIUM
+ABrowserMedHeaderFont:			Proportional Bold 12
 
-ViewportFont:			Proportional MEDIUM
-
-WorksheetLabelFont:		Black 16
-
-WorksheetPerfMonLabelFont:	Black 12
-
-ViewportTimeFont:		Black 20
-
-ViewportInfoFont:		Fixed MEDIUM
-
-ViewportInspectFont:	Fixed MEDIUM_SMALL
-
-ABrowserModeFont:		Proportional MEDIUM
-
-ABrowserLargeModeFont:	Proportional HUGE
-
-ABrowserMedHeaderFont:	Proportional Bold 12
-
-ABrowserVersionHeaderFont:	Proportional Bold 10
+ABrowserVersionHeaderFont:		Proportional Bold 10
 
 ABrowserTooltipCategoryFont3:	Proportional Bold 7
 ABrowserTooltipCategoryFont4:	Proportional Bold 5
 
-ABrowserModeCategoryFont3:	Proportional Bold 8
-ABrowserModeCategoryFont4:	Proportional Bold 6
+ABrowserModeFont:				Proportional MEDIUM
+ABrowserModeCategoryFont3:		Proportional Bold 8
+ABrowserModeCategoryFont4:		Proportional Bold 6
 
-ABrowserLargeModeCategoryFont3:	 Proportional Bold 20
-ABrowserLargeModeCategoryFont4:	 Proportional Bold 15
+ABrowserLargeModeFont:			Proportional HUGE
+ABrowserLargeModeCategoryFont3:	Proportional Bold 20
+ABrowserLargeModeCategoryFont4:	Proportional Bold 15
 
-OrboltSplashscreenFont:		Proportional Bold 10
+OrboltSplashscreenFont:			Proportional Bold 10
 
-ViewerFlashMessageFont:		NetworkFont
+ViewerFlashMessageFont:			NetworkFont
 ViewerFlashMessageFontHeight:	0.3
 
 // Volume of audio alerts
-AudioVolume:			0.75
+AudioVolume:					0.75
