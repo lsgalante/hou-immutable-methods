@@ -1,0 +1,16 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "attrib"
+        label   "Attribute"
+        type    string
+        default { "" }
+        menureplace {
+            [ "kwargs['node'].generateInputAttribMenu(0)" ]
+            language python
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+
+}
