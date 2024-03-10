@@ -1,8 +1,0 @@
-// Include for script action button
-
-#if PSI_SCRIPT_ACTION
-    ACTION_ICONBUTTON "PSI_BUTTON_ICON" VALUE(PSI_TOKEN.script_action)
-	HELP(PSI_SCRIPT_ACTION_HELP)
-	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
-#endif
-

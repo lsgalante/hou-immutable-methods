@@ -1,6 +1,0 @@
-    // radiotabgroup.top.ui
-    { LOOK(none) SIZE(0, 0.05) }	// Spacer
-
-    TABDIALOG radio
-    { 
-	VALUE(PSI_TOKEN.val) STRETCH(1,0)

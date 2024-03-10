@@ -1,8 +1,0 @@
-PSI_TOKEN.join =		// Template: join.top
-{
-#if PSI_STANDARD_PARMS
-  LAYOUT(horizontal) PSI_JOIN_STRETCH JUSTIFY(left, center)
-  HMARGIN(PSI_LEADING_MARGIN, PSI_TRAILING_MARGIN) NO_MARGIN_SPACING_SCALE
-#else
-  LAYOUT(horizontal) JUSTIFY(left, center) UNSCALABLE
-#endif

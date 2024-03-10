@@ -1,8 +1,0 @@
-// Template: menu.join
-#if PSI_LOOK_ICON
-PSI_TOKEN.gad = PSI_TOKEN.menu WIDTH(0.27);
-#else
-PSI_TOKEN.gad = PSI_TOKEN.menu WIDTH(1.3);
-#endif
-#include "config/Templates/ParamV3/psi_script_action.ui"
-

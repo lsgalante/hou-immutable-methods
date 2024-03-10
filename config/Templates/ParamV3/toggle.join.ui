@@ -1,4 +1,0 @@
-// Template: toggle for toggle join
-PSI_TOKEN.gad = PARM_BUTTON("PSI_TOKEN", "") toggle VALUE(PSI_TOKEN.val) RETAIN_SIZE_WHEN_HIDDEN;
-#include "config/Templates/ParamV3/psi_script_action.ui"
-

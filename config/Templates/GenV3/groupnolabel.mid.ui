@@ -1,9 +1,0 @@
-    // groupnolabel.mid.ui
-    {
-	LAYOUT(vertical) LOOK(none) HSTRETCH MARGIN(0.05)
-
-	{ HEIGHT(0.05) }
-
-	SWITCHER
-	{
-	    LOOK(plain) HSTRETCH LAYOUT(overlap) VALUE(PSI_TOKEN.val)

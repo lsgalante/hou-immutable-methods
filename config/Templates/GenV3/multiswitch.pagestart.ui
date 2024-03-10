@@ -1,4 +1,0 @@
-    // multiswitch.pagestart.ui
-    TAB 
-    {
-	LAYOUT(vertical) HSTRETCH HMARGIN(0.05) VMARGIN(0.05, 0)
