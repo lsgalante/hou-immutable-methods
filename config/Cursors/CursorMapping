@@ -1,0 +1,274 @@
+# CursorMapping
+#
+# This file lists the mouse cursor information for Houdini.
+#
+# Each mouse cursor is defined as a triplet of lines:
+#   <cursorName>.file := <filename of image in Cursors directory> ;
+#   <cursorName>.x := <x coordinate of hotspot location> ;
+#   <cursorName>.y := <y coordinate of hotspot location> ;
+#
+# If the file is the .cursor format, then the hotspot location is ignored since
+# it already includes hotspot information within. Otherwise, the hotspot
+# location is relative to the TOP LEFT corner of the image. If an image is
+# supplied and the hotspot coordinates are either negative or missing, then
+# the hotspot location will default to the center of the image.
+#
+
+##############################################################################
+# TODO:
+#   - For all new style cursors (.svg), we need to specify hotspots for them
+#   - For all used cursors, we need to have new style cursors for it
+#
+##############################################################################
+
+# View tool cursors
+DM_viewDolly.file       := dolly.svg;           # RMB (dolly)
+DM_viewDolly.x          := 11;
+DM_viewDolly.y          := 11;
+DM_viewRx.file          := tilt.svg;            # Alt+LMB (rotate in X)
+DM_viewRx.x             := 11;
+DM_viewRx.y             := 11;
+DM_viewRy.file          := swivel.svg;          # Alt+LMB (rotate in Y)
+DM_viewRy.x             := 11;
+DM_viewRy.y             := 11;
+DM_viewRz.file          := roll.svg;            # Ctrl+LMB (roll)
+DM_viewRz.x             := 11;
+DM_viewRz.y             := 11;
+DM_viewScroll.file      := track.svg;           # MMB (pan)
+DM_viewScroll.x         := 11;
+DM_viewScroll.y         := 11;
+DM_viewTumble.file      := grabbing.svg;        # LMB (tumble)
+DM_viewTumble.x         := 11;
+DM_viewTumble.y         := 13;
+DM_viewZoom.file        := zoom.svg;            # Alt+RMB (zoom)
+DM_viewZoom.x           := 11;
+DM_viewZoom.y           := 11;
+hand.file               := grab.svg;            # Default view cursor
+hand.x                  := 11;
+hand.y                  := 13;
+invisible.file          := invisible.svg;       # Invisible (no) cursor
+invisible.x             := 0;
+invisible.y             := 0;
+
+# Arrow cursors
+iris.file               := white.svg;           # default arrow cursor
+iris.x                  := 7;
+iris.y                  := 2;
+arrowAll.file           := resize_all.svg;      # Resizing
+arrowAll.x              := 11;
+arrowAll.y              := 11;
+arrowDiag.file          := resize_diagonal.svg; # Diagonal resizing
+arrowDiag.x             := 11;
+arrowDiag.y             := 11;
+arrowD1.file            := arrowD1.cursor;      # Selector arrow
+arrowD2.file            := white.svg;           # Dragging handle
+arrowD2.x               := 7;
+arrowD2.y               := 2;
+arrowAllDiagonal.file   := arrowAllDiagonal.cursor; # unused
+arrow.file              := arrow.cursor;        # unused
+arrow_brush.file        := brush.svg;           # new unused
+arrow_brush.x           := 11;
+arrow_brush.y           := 11;
+arrow_brush2.file       := brush2.svg;          # new unused
+arrow_brush2.x          := 11;
+arrow_brush2.y          := 11;
+arrow_move.file         := move.svg;            # new unused
+ibeam.file		:= white_ibeam.svg;	# For text fields.
+ibeam.x			:= 16;
+ibeam.y			:= 16;
+arrowKeyLock.file       := white_keylock.svg;
+arrowKeyLock.x          := 7;
+arrowKeyLock.y          := 2;
+
+# Selection
+select_white_replace.file   := white.svg;           # Default selection mode
+select_white_replace.x      := 7;
+select_white_replace.y      := 2;
+select_white_add.file       := white_add.svg;       # Add to selection 
+select_white_add.x          := 5;
+select_white_add.y          := 2;
+select_white_remove.file    := white_remove.svg;    # Remove to selection
+select_white_remove.x       := 5;
+select_white_remove.y       := 2;
+select_white_toggle.file    := white_toggle.svg;    # Toggle selection
+select_white_toggle.x       := 5;
+select_white_toggle.y       := 2;
+select_black_replace.file   := black.svg;           # Default selection mode
+select_black_replace.x      := 7;
+select_black_replace.y      := 2;
+select_black_add.file       := black_add.svg;       # Add to selection 
+select_black_add.x          := 5;
+select_black_add.y          := 2;
+select_black_remove.file    := black_remove.svg;    # Remove to selection
+select_black_remove.x       := 5;
+select_black_remove.y       := 2;
+select_black_toggle.file    := black_toggle.svg;    # Toggle selection
+select_black_toggle.x       := 5;
+select_black_toggle.y       := 2;
+select_laser_replace.file   := crosshair.svg;       # Laser select default
+select_laser_replace.x	    := 11;
+select_laser_replace.y	    := 11;
+select_laser_add.file	    := crosshair_add.svg;   # Laser select add
+select_laser_add.x	    := 11;
+select_laser_add.y	    := 11;
+select_laser_remove.file    := crosshair_remove.svg; # Laser select remove
+select_laser_remove.x	    := 11;
+select_laser_remove.y	    := 11;
+select_laser_toggle.file    := crosshair_toggle.svg; # Laser select toggle
+select_laser_toggle.x	    := 11;
+select_laser_toggle.y	    := 11;
+
+# Handle locate cursors
+handle_locate.file      := white.svg;
+handle_locate.x         := 7;
+handle_locate.y         := 2;
+handle_locate_x.file    := white_x.svg;
+handle_locate_x.x       := 7;
+handle_locate_x.y       := 2;
+handle_locate_y.file    := white_y.svg;
+handle_locate_y.x       := 7;
+handle_locate_y.y       := 2;
+handle_locate_z.file    := white_z.svg;
+handle_locate_z.x       := 7;
+handle_locate_z.y       := 2;
+handle_locate_xy.file   := white_xy.svg;
+handle_locate_xy.x      := 7;
+handle_locate_xy.y      := 2;
+handle_locate_yz.file   := white_yz.svg;
+handle_locate_yz.x      := 7;
+handle_locate_yz.y      := 2;
+handle_locate_xz.file   := white_xz.svg;
+handle_locate_xz.x      := 7;
+handle_locate_xz.y      := 2;
+handle_locate_xyz.file  := white_xyz.svg;
+handle_locate_xyz.x     := 7;
+handle_locate_xyz.y     := 2;
+handle_locate_u.file    := white_u.svg;
+handle_locate_u.x       := 7;
+handle_locate_u.y       := 2;
+handle_locate_v.file    := white_v.svg;
+handle_locate_v.x       := 7;
+handle_locate_v.y       := 2;
+handle_locate_w.file    := white_w.svg;
+handle_locate_w.x       := 7;
+handle_locate_w.y       := 2;
+handle_locate_uv.file   := white_uv.svg;
+handle_locate_uv.x      := 7;
+handle_locate_uv.y      := 2;
+
+# Floor state cursors
+DM_floor.file           := white.svg;
+DM_floor.x              := 7;
+DM_floor.y              := 2;
+
+# Splitter cursors (should be black to be consistent with Windows)
+arrowRight.file         := resize_right.svg;        # Move splitter right
+arrowRight.x            := 11;
+arrowRight.y            := 11;
+arrowUp.file            := resize_up.svg;           # Move splitter up
+arrowUp.x               := 11;
+arrowUp.y               := 11;
+arrowLeft.file          := resize_left.svg;         # Move splitter left
+arrowLeft.x             := 11;
+arrowLeft.y             := 11;
+arrowDown.file          := resize_down.svg;         # Move splitter down
+arrowDown.x             := 11;
+arrowDown.y             := 11;
+arrowUpDown.file        := resize_v.svg;            # Move splitter up/down
+arrowUpDown.x           := 11;
+arrowUpDown.y           := 11;
+arrowLeftRight.file     := resize_h.svg;            # Move splitter left/right
+arrowLeftRight.x        := 11;
+arrowLeftRight.y        := 11;
+
+arrowNE.file            := resize_ne.svg;
+arrowNE.x               := 11;
+arrowNE.y               := 11;
+arrowNW.file            := resize_nw.svg;
+arrowNW.x               := 11;
+arrowNW.y               := 11;
+arrowSE.file            := resize_se.svg;
+arrowSE.x               := 11;
+arrowSE.y               := 11;
+arrowSW.file            := resize_sw.svg;
+arrowSW.x               := 11;
+arrowSW.y               := 11;
+arrowNWSE.file          := resize_nwse.svg;
+arrowNWSE.x             := 11;
+arrowNWSE.y             := 11;
+arrowSWNE.file          := resize_swne.svg;
+arrowSWNE.x             := 11;
+arrowSWNE.y             := 11;
+
+swapLeftRight.file      := swap_h.svg;              # Swap panes horizontally
+swapLeftRight.x         := 7;
+swapLeftRight.y         := 2;
+swapUpDown.file         := swap_v.svg;              # Swap panes vertically
+swapUpDown.x            := 7;
+swapUpDown.y            := 2;
+
+# Network editor state cursors
+align.file              := align.svg;		# Align state
+align.x			:= 11;
+align.y			:= 11;
+flag.file		:= flag.svg;		# Set flag state
+flag.x			:= 5;
+flag.y			:= 2;
+visualize.file		:= visualize.svg;	# Create visualizer state
+visualize.x		:= 5;
+visualize.y		:= 2;
+
+# Other generic cursors
+cross.file              := crosshair.svg;       # Draw tool
+cross.x			:= 11;
+cross.y			:= 11;
+
+X.file                  := do_not.svg;          # Action is invalid
+                                                #   (COPs uses for delete)
+busy.file               := wait.svg;            # Hourglass on Windows
+interruptable.file      := wait2.svg;           # Arrow with hourglass
+interruptable.x         := 2;
+interruptable.y         := 0;
+
+dragdropOn.file         := drag_drop.svg;       # DnD allowed
+dragdropOn.x            := 1;
+dragdropOn.y            := 0;
+dragdropOff.file        := drag_nodrop.svg;     # DnD not allowed
+dragdropOff.x           := 1;
+dragdropOff.y           := 0;
+
+question.file           := question.cursor;     # unused
+cut.file                := cut.svg;	        # unused
+cut.x                   := 5;
+cut.y                   := 10;
+
+stitch.file             := stitch.svg;
+stitch.x                := 7;
+stitch.y                := 2;
+
+# COP viewer related
+handpoint.file          := point.svg;           # Start tab move
+handpoint.x             := 7;
+handpoint.y             := 2;
+select.file             := white.svg;           # Cursor mouseover on handle
+select.x                := 7;
+select.y                := 2;
+
+# Misc other unused cursors
+metal.file              := metal.svg;           # new unused
+metal.x                 := 7;
+metal.y                 := 2;
+chili.file              := chili.svg;           # new unused
+chili.x                 := 6;
+chili.y                 := 3;
+wire.file               := wire.svg;            # new unused
+wire.x                  := 7;
+wire.y                  := 2;
+zoomin.file             := zoom_in.svg;         # new unused
+zoomout.file            := zoom_out.svg;        # new unused
+smallBusy.file          := smallBusy.cursor;    # unused
+cornerBL.file           := cornerBL.cursor;     # unused
+cornerBR.file           := cornerBR.cursor;     # unused
+cornerTL.file           := cornerTL.cursor;     # unused
+cornerTR.file           := cornerTR.cursor;     # unused
+
