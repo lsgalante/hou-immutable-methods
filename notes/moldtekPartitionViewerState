@@ -1,0 +1,21 @@
+rows:
+	modes:
+		add/remove
+		edit
+
+
+-add new partition
+-add first prim to partition
+-add additional prims to partition
+-remove prim from partition
+-remove final prim from partition
+-remove partition
+
+-change draft angle for partition globally
+-change draft angle for partition locally
+-change reach of partition globally
+-change reach of partition locallt
+
+-transfer prim to different partition
+-merge partitions
+-split partition

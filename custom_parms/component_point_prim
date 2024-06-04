@@ -1,0 +1,16 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "component"
+        label   "Component"
+        type    ordinal
+        default { "0" }
+        menu {
+            "point" "Point"
+            "prim"  "Primitive"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+
+}
