@@ -23,8 +23,9 @@ Scheme: IM Darker
 #define EDIT_BG_OUTLINE			GREY(0.14)
 
 #define BUTTON_DISABLE			GREY(0.5)
-#define BUTTON_SEL				mid
-#define BUTTON_PRESS			mid
+#define BUTTON_SEL				g5
+#define BUTTON_PRESS			g5
+
 
 // ICONS //
 
@@ -38,67 +39,67 @@ IconSaturation:	0.5
 // BackColor - if white lines appear,
 // adjust the BorderDark (auto contrast code)
 
-BackColor:					             black
-BorderLight:	                         dark
+BackColor:					             g0
+BorderLight:	                         g4
 BorderDark:		                         #010101
 
-ButtonGradHi:				             dark
-ButtonGradLow:				             dark
-ButtonNonActiveGradLow:		             black      // Low end of gradient on non-selected tabs
+ButtonGradHi:				             b2
+ButtonGradLow:				             b1
+ButtonNonActiveGradLow:		             b0
 
 // Used for variety of borders but not buttons
-ButtonShadowLight:			             black
-ButtonShadowMed:			             mid
-ButtonShadowMedDark:		             dark
-ButtonShadowDark:			             dark
-ButtonShadow:				             dark
+ButtonShadowLight:			             g0
+ButtonShadowMed:			             g5
+ButtonShadowMedDark:		             g4
+ButtonShadowDark:			             g4
+ButtonShadow:				             g4
 
-ToolbarBevelLight:			             black
-ToolbarBevelDark:			             black
-ToolbarFlatGradHi:			             black
-ToolbarFlatGradLo:			             black
+ToolbarBevelLight:			             g0
+ToolbarBevelDark:			             g0
+ToolbarFlatGradHi:			             g0
+ToolbarFlatGradLo:			             g0
 
-DialogBlendBG:				             black	     // messages, etc
+DialogBlendBG:				             g0	     // messages, etc
 
-ButtonText:					             lite
-ButtonHoverHighlight:		             mid
-ButtonPressedText:			             lite
-ButtonPressedText2:			             lite
-ButtonPressedGradHi:		             dark
-ButtonPressedGradLow:		             dark
+ButtonText:					             g8
+ButtonHoverHighlight:		             g5
+ButtonPressedText:			             g8
+ButtonPressedText2:			             g8
+ButtonPressedGradHi:		             g5
+ButtonPressedGradLow:		             g5
 
-ButtonMenuArrowHi:			             dark
-ButtonMenuArrowLow:			             dark
-ButtonMenuArrow:			             mid
+ButtonMenuArrowHi:			             g4
+ButtonMenuArrowLow:			             g4
+ButtonMenuArrow:			             g5
 
-ButtonArrow:				             mid
-ButtonArrowDisabled:		             dark
-ButtonArrowPressed:			             mid
-ButtonArrowModified:		             mid
+ButtonArrow:				             g5
+ButtonArrowDisabled:		             g4
+ButtonArrowPressed:			             g5
+ButtonArrowModified:		             g5
 
-TextColor:              	             lite
-HiliteTextColor:        	             black
+TextColor:              	             g8
+HiliteTextColor:        	             g0
 HiliteTextBG:           	             green
-SecondaryText:          	             green
+SecondaryText:          	             g8
 LinkText:               	             #64ACFF
 
 DropIndicator           	             0.0 0.0 1.0
 
 MenuBG:						             #101010
-MenuText:					             lite
-MenuTextDisabled:			             mid
-MenuTextHotkey:				             lite
-MenuHighlight:				             black
-MenuShadow:					             black
-MenuTextSelected:			             lite
-MenuSelectedBG:				             dark
-MenuTitleBG:				             mid
+MenuText:					             g8
+MenuTextDisabled:			             g5
+MenuTextHotkey:				             g8
+MenuHighlight:				             g0
+MenuShadow:					             g0
+MenuTextSelected:			             g8
+MenuSelectedBG:				             g4
+MenuTitleBG:				             g5
 InvertedMenuBackground:		             green
 
 // RAMP (FLOAT) PARAMETERS //
 
-RampBG:						             darker
-RampFG:						             dark
+RampBG:						             g4
+RampFG:						             g4
 RampBGDisabled:				             GREY(0.3)
 RampFGDisabled:				             GREY(0.45)
 RampGrid:					             GREY(0.3)
@@ -113,66 +114,66 @@ RampHandleBG:				             green
 RampHandleFG:				             #b0b0b0
 RampHandleHoverBG:			             #b0b0b0
 RampHandleHoverFG:			             #b0b0b0
-RampHandleLines:        	             mid
-RampHandleLinesHover:   	             mid
+RampHandleLines:        	             g5
+RampHandleLinesHover:   	             g5
 RampBoxSelect:          	             GREY(0.3)
 RampMarkerHover:			             #b0b0b0
 RampConstraintGuide:    	             #b0b0b0
 
-Separator:					             dark
+Separator:					             g4
 
-CheckBG:					             black
-CheckLocated:				             white
-CheckColor:					             white
+CheckBG:					             g0
+CheckLocated:				             g9
+CheckColor:					             g9
 
-RadioBG:					             black
-RadioBorder:				             mid
-RadioDot:					             mid
-RadioDotHighlight:			             mid
+RadioBG:					             g0
+RadioBorder:				             g5
+RadioDot:					             g5
+RadioDotHighlight:			             g5
 
-TextboxBG:					             black
+TextboxBG:					             g0
 TextboxInvalidBG:			             red
-TextboxBorderPrimary:		             mid
-TextboxBorderHighlight:		             black
-TextboxBorderStippled:		             black
-TextboxBorderKeyFocus:		             mid
+TextboxBorderPrimary:		             g5
+TextboxBorderHighlight:		             g0
+TextboxBorderStippled:		             g0
+TextboxBorderKeyFocus:		             g5
 TextboxError:				             error
-TextboxGutter:				             dark
+TextboxGutter:				             g4
 TextboxDropMarker: 			             HSV  238  0.40  0.88
 
-TextboxFeedbackFG:			             mid
+TextboxFeedbackFG:			             g5
 TextboxFeedbackBG:			             green
-SelectedTextFG:				             black
-SelectedTextBG:				             lite
+SelectedTextFG:				             g0
+SelectedTextBG:				             g8
 SelectedTextDisabledBG: 	             GREY(0.3)
 
-SliderTopBorder:			             mid
-SliderBottomBorder:			             mid
-SliderAdvancedBevel:		             mid
-SliderAdvancedGroove:		             mid
-SliderRemainingBevel:		             dark
-SliderRemainingGroove:		             dark
-SliderTick:					             mid
-SliderTickLabel:    		             mid
-SliderRangeBrackets:		             mid
+SliderTopBorder:			             g5
+SliderBottomBorder:			             g5
+SliderAdvancedBevel:		             g5
+SliderAdvancedGroove:		             g5
+SliderRemainingBevel:		             g4
+SliderRemainingGroove:		             g4
+SliderTick:					             g5
+SliderTickLabel:    		             g5
+SliderRangeBrackets:		             g5
 
-SliderThumbGradHi: 			             mid
-SliderThumbGradLow: 		             mid
-SliderThumbPressedGradHi:	             mid
-SliderThumbPressedGradLow:	             mid
-SliderThumbTopBorder:		             mid
-SliderThumbTopBevel:		             dark
-SliderThumbBottomBevel		             dark
-SliderThumbBottomBorder:	             mid
-SliderThumbRangeArrow:		             lite
+SliderThumbGradHi: 			             g5
+SliderThumbGradLow: 		             g5
+SliderThumbPressedGradHi:	             g5
+SliderThumbPressedGradLow:	             g5
+SliderThumbTopBorder:		             g5
+SliderThumbTopBevel:		             g4
+SliderThumbBottomBevel		             g4
+SliderThumbBottomBorder:	             g5
+SliderThumbRangeArrow:		             g8
 
-RangeSliderBackground:		             black
-RangeSliderRect:			             lite
-RangeSliderRectLocated:		             lite
-RangeSliderRectSelected:	             lite
-RangeSliderArrow:			             lite
-RangeSliderArrowLocated:	             lite
-RangeSliderArrowSelected:	             lite
+RangeSliderBackground:		             g0
+RangeSliderRect:			             g8
+RangeSliderRectLocated:		             g8
+RangeSliderRectSelected:	             g8
+RangeSliderArrow:			             g8
+RangeSliderArrowLocated:	             g8
+RangeSliderArrowSelected:	             g8
 
 LeverSliderBG:                           GREY(0.12)
 LeverSliderTopBevel:	                 GREY(0.16)
@@ -188,10 +189,10 @@ LeverSliderThumbText:                    GREY(0.77)
 LeverSliderThumbTopBevel:                GREY(0.36)
 LeverSliderThumbBottomBevel:             GREY(0.09)
 LeverSliderThumbTopBorder:               GREY(0.2)
-LeverSliderThumbBottomBorder:            black
+LeverSliderThumbBottomBorder:            g0
 LeverSliderThumbGradBottom:              GREY(0.22)
 LeverSliderThumbGradTop:                 GREY(0.36)
-LeverSliderThumbRangeArrow:              black
+LeverSliderThumbRangeArrow:              g0
 LeverSliderThumbPressedGradBottom:       PRESSED_HIGH
 LeverSliderThumbPressedGradTop:          PRESSED_LOW
 
@@ -205,83 +206,83 @@ KeyframeButtonCircleKey:			     #7ED321
 KeyframeButtonCircleSomeKey:		     #356600
 KeyframeButtonCircleNoKey:			     HSV  180  0.5  0.5
 KeyframeButtonCirclePending:		     HSV  39   1    0.9
-KeyframeButtonBorder:				     black
+KeyframeButtonBorder:				     g0
 KeyframeButtonCircleFillOpacity:	     GREY(0.2)
 
 LadderBG:			                     EDIT_BG
-LadderText:			                     lite
-LadderHighlight:	                     mid
+LadderText:			                     g8
+LadderHighlight:	                     g5
 LadderOutline:		                     GREY(0.5)
 LadderShadow:		                     green
 
-ScrollbarUpperBorder:		             dark
-ScrollbarBottomBorder:		             dark
-ScrollbarWell:				             black
-ScrollbarWellShadow1:		             black
-ScrollbarWellShadow2:		             black
-ScrollbarWellShadow3:		             black
-ScrollbarWellShadowBlend12:	             black
-ScrollbarWellShadowBlend13:	             black
-ScrollbarWellShadowBlend22:	             black
-ScrollbarWellShadowBlend23:	             black
-ScrollbarWellShadowBlend32:	             black
-ScrollbarWellShadowBlend33:	             black
+ScrollbarUpperBorder:		             g4
+ScrollbarBottomBorder:		             g4
+ScrollbarWell:				             g2
+ScrollbarWellShadow1:		             g2
+ScrollbarWellShadow2:		             g2
+ScrollbarWellShadow3:		             g2
+ScrollbarWellShadowBlend12:	             g2
+ScrollbarWellShadowBlend13:	             g2
+ScrollbarWellShadowBlend22:	             g2
+ScrollbarWellShadowBlend23:	             g2
+ScrollbarWellShadowBlend32:	             g2
+ScrollbarWellShadowBlend33:	             g2
 
-ScrollbarThumbTopBorder:	             dark
-ScrollbarThumbBottomBorder:	             dark
-ScrollbarThumbBevel:		             dark
-ScrollbarThumbGrippyBase:	             black
-ScrollbarThumbGrippyEdge:	             black
+ScrollbarThumbTopBorder:	             g4
+ScrollbarThumbBottomBorder:	             g4
+ScrollbarThumbBevel:		             g4
+ScrollbarThumbGrippyBase:	             g5
+ScrollbarThumbGrippyEdge:	             g5
 
-ScrollbarButtonTopBorder:		         dark
-ScrollbarButtonBottomBorder:	         dark
-ScrollbarButtonBetweenBorder:	         dark
-ScrollbarButtonBevel:			         dark
-ScrollbarButtonArrow:			         mid
+ScrollbarButtonTopBorder:		         g5
+ScrollbarButtonBottomBorder:	         g5
+ScrollbarButtonBetweenBorder:	         g5
+ScrollbarButtonBevel:			         g4
+ScrollbarButtonArrow:			         g5
 
-ScrollArrow:				             mid
-ScrollArrowSelected:		             mid
-ScrollArrowDisabled:		             black
+ScrollArrow:				             g5
+ScrollArrowSelected:		             g5
+ScrollArrowDisabled:		             g0
 
-ProgressMeterPercentLabelLeft:		     black
-ProgressMeterPercentLabelRight:		     white
-ProgressMeterTopBorder:				     shadow
-ProgressMeterBottomBorder:			     shadow
-ProgressMeterWellGradHi:			     well
-ProgressMeterWellGradLo:			     well
-ProgressMeterBevelTop:				     white
-ProgressMeterBevelBottom:			     selection_shadow
-ProgressMeterGradHi:				     selection_hilite
-ProgressMeterGradLo:				     mid
-ProgressMeterText:					     lite
+ProgressMeterPercentLabelLeft:		     g0
+ProgressMeterPercentLabelRight:		     g9
+ProgressMeterTopBorder:				     g1
+ProgressMeterBottomBorder:			     g1
+ProgressMeterWellGradHi:			     g0
+ProgressMeterWellGradLo:			     g0
+ProgressMeterBevelTop:				     g9
+ProgressMeterBevelBottom:			     g4
+ProgressMeterGradHi:				     g5
+ProgressMeterGradLo:				     g5
+ProgressMeterText:					     g8
 
-ListShadow:					             dark
-ListHighlight:				             dark
-ListBorder:					             dark
-ListBG:						             black 	       // Bg in download color scheme window
+ListShadow:					             g4
+ListHighlight:				             g4
+ListBorder:					             g4
+ListBG:						             g0 	       // Bg in download color scheme window
 ListEntry1:					             #101010
-ListEntry2:					             black
+ListEntry2:					             g0
 ListEntrySelected:			             blue
-ListTitleShadow:			             black
-ListTitleHighlight:			             black
-ListTitleGradHi:			             dark
-ListTitleGradLow:			             dark
+ListTitleShadow:			             g0
+ListTitleHighlight:			             g0
+ListTitleGradHi:			             g4
+ListTitleGradLow:			             g4
 ListTitleHighlightGradHi:	             blue
 ListTitleHighlightGradLow:	             blue
-ListTitleFilteredText:		             mid
-ListText:					             lite		       // Fg in download color scheme window
-ListAltText:				             lite
+ListTitleFilteredText:		             g5
+ListText:					             g8		       // Fg in download color scheme window
+ListAltText:				             g8
 ListHoverHighlight:			             #103080
 
 GalleryBackground: 			             GREY(0.15)
-SnapshotGalleryBackground: 	             black
+SnapshotGalleryBackground: 	             g0
 
 SwitchButtonSelected: 		             GREY(0.5)
 SwitchButtonLocated: 		             GREY(0.2)
 
-HotkeyMgrUnboundActionFG:	             shadow
+HotkeyMgrUnboundActionFG:	             g1
 
-SSBorder:	                             mid                 // Spreadsheet column divider
+SSBorder:	                             g5                 // Spreadsheet column divider
 SSOutline:	                             DropIndicator       // Spreadsheet drag & drop outline
 
 // Highlight Alpha in the channel lister
@@ -290,29 +291,29 @@ SSOutline:	                             DropIndicator       // Spreadsheet drag 
 
 SSHighlightAlpha:	                     0.25 0.55 0.0
 
-SSHeader:	                             mid
+SSHeader:	                             g5
 
-GroupBorder:                             mid
+GroupBorder:                             g5
 
-GroupHeader0:                            dark
-GroupHeaderTop0:                         dark
-GroupHeaderHi0:                          dark
-GroupHeaderHiTop0:                       dark
-GroupHeaderOpen0:                        dark
-GroupHeaderOpenTop0:                     dark
-GroupHeaderDisabled0:                    dark
-GroupHeaderDisabledTop0:                 dark
-GroupBody0:                              dark
+GroupHeader0:                            g4
+GroupHeaderTop0:                         g4
+GroupHeaderHi0:                          g4
+GroupHeaderHiTop0:                       g4
+GroupHeaderOpen0:                        g4
+GroupHeaderOpenTop0:                     g4
+GroupHeaderDisabled0:                    g4
+GroupHeaderDisabledTop0:                 g4
+GroupBody0:                              g4
 
-GroupHeader1:                            dark
-GroupHeaderTop1:                         dark
-GroupHeaderHi1:                          dark
-GroupHeaderHiTop1:                       dark
-GroupHeaderOpen1:                        dark
-GroupHeaderOpenTop1:                     dark
-GroupHeaderDisabled1:                    dark
-GroupHeaderDisabledTop1:                 dark
-GroupBody1:                              dark
+GroupHeader1:                            g4
+GroupHeaderTop1:                         g4
+GroupHeaderHi1:                          g4
+GroupHeaderHiTop1:                       g4
+GroupHeaderOpen1:                        g4
+GroupHeaderOpenTop1:                     g4
+GroupHeaderDisabled1:                    g4
+GroupHeaderDisabledTop1:                 g4
+GroupBody1:                              g4
 
 GroupHeader2:                            GREY(0.18)
 GroupHeaderTop2:                         GREY(0.18)
@@ -342,89 +343,89 @@ CreateAssetBranch: 		                 #ccffcc 	// green
 CreateAssetBasename: 	                 #ffffcc	// yellow
 CreateAssetVersion: 	                 #ffcccc 	// pink
 
-InfoBG:		                             dark
-InfoText:	                             lite
+InfoBG:		                             g4
+InfoText:	                             g8
 
-PopupHelpBG:		                     dark
-PopupHelpFG:		                     lite
-PopupHelpHotkeyFG:	                     shadow
-PopupExtraHelpFG:	                     lite
+PopupHelpBG:		                     g4
+PopupHelpFG:		                     g8
+PopupHelpHotkeyFG:	                     g1
+PopupExtraHelpFG:	                     g8
 PopupExtraHelpBG:	                     HSV 220 0.425 0.4
 
-ShelfGradHi:		                     dark
-ShelfGradMidHi:		                     dark
-ShelfGradMidLow:	                     dark
-ShelfGradLow:		                     dark
+ShelfGradHi:		                     g4
+ShelfGradMidHi:		                     g4
+ShelfGradMidLow:	                     g4
+ShelfGradLow:		                     g4
 
 // This does not appear to be used
 ShelfBG:				                 red
 
-ShelfEmptyBG:			                 dark
-ShelfTabActiveHi:		                 lite
-ShelfTabActiveLow:		                 lite
-ShelfTabInactiveHi:		                 dark
-ShelfTabInactiveLow:	                 dark
+ShelfEmptyBG:			                 g4
+ShelfTabActiveHi:		                 g8
+ShelfTabActiveLow:		                 g8
+ShelfTabInactiveHi:		                 g4
+ShelfTabInactiveLow:	                 g4
 
-PaneTabActiveHi:		                 dark
-PaneTabActiveLow:		                 dark
-PaneTabInactiveHi:		                 black
-PaneTabInactiveLow:		                 black
-PaneTabEdges:			                 black
-PaneEmptyBG:			                 black
-PaneBorder:				                 black
-PaneHeaderGradHi:		                 black
-PaneHeaderGradLow:		                 black
-PaneTabShadow:			                 black
-PaneTabMarker:			                 black
+PaneTabActiveHi:		                 g4
+PaneTabActiveLow:		                 g4
+PaneTabInactiveHi:		                 g0
+PaneTabInactiveLow:		                 g0
+PaneTabEdges:			                 g0
+PaneEmptyBG:			                 g0
+PaneBorder:				                 g0
+PaneHeaderGradHi:		                 g0
+PaneHeaderGradLow:		                 g0
+PaneTabShadow:			                 g0
+PaneTabMarker:			                 g0
 
-PathGadgetArrow1:						 dark
-PathGadgetArrow2:						 dark
-PathGadgetArrow3:						 mid
+PathGadgetArrow1:						 g4
+PathGadgetArrow2:						 g4
+PathGadgetArrow3:						 g5
 
-PathGadgetArrow1Selected:				 mid
-PathGadgetArrow2Selected:				 mid
-PathGadgetArrow3Selected:				 mid
+PathGadgetArrow1Selected:				 g5
+PathGadgetArrow2Selected:				 g5
+PathGadgetArrow3Selected:				 g5
 
-PathGadgetPrimaryBorder:				 black
-PathGadgetSecondaryBorder:				 black
+PathGadgetPrimaryBorder:				 g0
+PathGadgetSecondaryBorder:				 g0
 
-PathGadgetPrimaryBorderSelected:		 dark
-PathGadgetSecondaryBorderSelected:		 dark
+PathGadgetPrimaryBorderSelected:		 g4
+PathGadgetSecondaryBorderSelected:		 g4
 
-PathGadgetBevel:						 black
-PathGadgetBevelSelected:				 dark
+PathGadgetBevel:						 g0
+PathGadgetBevelSelected:				 g4
 
-PathGadgetText:							 lite
+PathGadgetText:							 g8
 
-PathGadgetGradHi:						 black
-PathGadgetGradLow:						 black
+PathGadgetGradHi:						 g0
+PathGadgetGradLow:						 g0
 
-PathGadgetGradHiSelected:				 mid
-PathGadgetGradLowSelected:				 mid
+PathGadgetGradHiSelected:				 g5
+PathGadgetGradLowSelected:				 g5
 
-PathGadgetHistoryButtonBevel:			 dark
-PathGadgetHistoryButtonBevelSelected:	 mid
+PathGadgetHistoryButtonBevel:			 g4
+PathGadgetHistoryButtonBevelSelected:	 g5
 
-ViewportBorder:					         mid
-ViewportDividers:				         mid
+ViewportBorder:					         g5
+ViewportDividers:				         g5
 
 ViewportInspectBox:				         GREY(0.8)
 ViewportInspectBorder:			         GREY(0.3)
-ViewportInspectText:                     darker			
+ViewportInspectText:                     g4			
 
 ImageViewportBorder:    		         GREY(0.2)
 ImageViewportBorderCurrent:              0.0 0.6 0.0
 
-TreeNodeBG:							     list_a
-TreeNodeAlternateBG:				     list_b
-TreeNodeSelectedBG:					     mid
-TreeNodeSelectedFG:					     white
-TreeNodeReservedParmFG:				     shadow
-TreeNodeInvisibleParmFG:			     text
-TreeNodeInvisibleReservedParmFG:	     shadow
+TreeNodeBG:							     g3
+TreeNodeAlternateBG:				     g1
+TreeNodeSelectedBG:					     g5
+TreeNodeSelectedFG:					     g9
+TreeNodeReservedParmFG:				     g1
+TreeNodeInvisibleParmFG:			     g7
+TreeNodeInvisibleReservedParmFG:	     g1
 #TreeNodeInvisibleParmFG:			     0.70 0.80 0.95
 #TreeNodeInvisibleReservedParmFG:	     0.45 0.50 0.58
-TreeLine:							     arrow
+TreeLine:							     g7
 
 PerformanceGood: 	                     0.45 0.82 0.08
 PerformanceBad: 	                     0.8 0 0
@@ -506,44 +507,44 @@ NetworkWireTimeDepNormal:	             red
 NetworkWireLoopBack:		             red
 NetworkWirePassThrough:		             red
 
-StatusBarMessageFG:	                     mid
-StatusBarMessageBG:	                     black
+StatusBarMessageFG:	                     g5
+StatusBarMessageBG:	                     g0
 
-StatusBarPromptFG:	                     mid
+StatusBarPromptFG:	                     g5
 StatusBarPromptBG:	                     HSV 40 0.6 0.6
 
-StatusBarWarningFG:	                     mid
+StatusBarWarningFG:	                     g5
 StatusBarWarningBG:	                     HSV 0 0.6 0.5
 
-StatusBarErrorFG:	                     mid
+StatusBarErrorFG:	                     g5
 StatusBarErrorBG:	                     HSV 0 1 1
 
-DopeSheetCurrentFrameFG:		         white
-DopeSheetCurrentFrameBG:		         black
+DopeSheetCurrentFrameFG:		         g9
+DopeSheetCurrentFrameBG:		         g0
 
-DopeSheetHoverFrameFG:			         white
-DopeSheetHoverFrameBG:			         darker
+DopeSheetHoverFrameFG:			         g9
+DopeSheetHoverFrameBG:			         g4
 DopeSheetHoverLine:				         GREY(0.5)
 
-DopeSheetIndicatorLine:			         black
-DopeSheetIndicatorClickLine:	         white
+DopeSheetIndicatorLine:			         g0
+DopeSheetIndicatorClickLine:	         g9
 DopeSheetIndicatorOverLine:		         GREY(0.5)
 
-DopeSheetKnob:					         black
-DopeSheetKnobClick:				         white
+DopeSheetKnob:					         g0
+DopeSheetKnobClick:				         g9
 DopeSheetKnobOver:				         GREY(0.5)
-DopeSheetKnobPendingKey:		         mid
+DopeSheetKnobPendingKey:		         g5
 DopeSheetKnobOutlier:			         1 1 0
 
 DopeSheetKeyActive:				         HSV 88 0.96 0.46
 DopeSheetKeyPartial2:			         HSV 88 1.0 0.3
 DopeSheetKeyPartial:			         HSV 88 0.96 0.7
-DopeSheetKeyPending:			         mid
+DopeSheetKeyPending:			         g5
 DopeSheetKeyMuted:				         GREY(0.2)
 DopeSheetKeyOverlay:			         1 0 0
 DopeSheetKeyDisabled:			         0.5 0 1
-DopeSheetKeySelected:			         selection_hilite
-DopeSheetKeySelectedBorder:		         black
+DopeSheetKeySelected:			         g5
+DopeSheetKeySelectedBorder:		         g0
 DopeSheetKeySelecting:			         1 0.45 0.25
 DopeSheetKeySelectingBorder:	         1 0 0 // RED
 
@@ -553,21 +554,21 @@ DopeSheetSimulation:			         0 0.5 1
 DopeSheetSimulationReset:		         1 0.5 0
 DopeSheetSimulationPlaying:              0.59 0.48 0.7
 
-DopeSheetTimeline:				         mid
+DopeSheetTimeline:				         g5
 DopeSheetTimelineAudio:			         GREY(0.5)
 
-DopeSheetTickLarge:				         lite
-DopeSheetTickSmall:				         lite
+DopeSheetTickLarge:				         g8
+DopeSheetTickSmall:				         g8
 DopeSheetTickSmallAudio:		         GREY(0.35)
-DopeSheetTickNumber:			         lite
+DopeSheetTickNumber:			         g8
 
-DopeSheetRangeNumber:			         lite
+DopeSheetRangeNumber:			         g8
 
-DopeSheetRowDisabled:			         black
-DopeSheetRowLight:				         list_a
-DopeSheetRowDark:				         list_b
-DopeSheetColLine:				         black
-DopeSheetRowLine:				         black
+DopeSheetRowDisabled:			         g0
+DopeSheetRowLight:				         g3
+DopeSheetRowDark:				         g1
+DopeSheetColLine:				         g0
+DopeSheetRowLine:				         g0
 
 DopeSheetViewLock:				         GREY(0.5)
 
@@ -576,14 +577,14 @@ DopeSheetSelectionHover:		         HSV 60 0.5 0.9
 DopeSheetSelectionActive:		         HSV 60 0.5 0.9
 DopeSheetSelectionInactive:		         HSV 60 0.9 0.7
 DopeSheetSelectionInactiveLock:	         1 0 1
-DopeSheetSelectionText:			         black
+DopeSheetSelectionText:			         g0
 DopeSheetSelectionRemove:		         1 0 0
 
 DopeSheetOverwriteHover:		         1 0 0
 DopeSheetOverwriteActive:		         0.7 0 0
 DopeSheetOverwriteInactive:		         0.9 0 0
 
-DopeSheetSpreadSheetText:		         black
+DopeSheetSpreadSheetText:		         g0
 DopeSheetSpreadSheetDisabled:	         0.07 0 0
 
 DopeSheetRippleTool:			         1 1 0
@@ -600,12 +601,12 @@ Bookmark7:                               0.65 0.46 0.11
 
 AssetBannerBackground:			         GREY(0.12)
 AssetUpdateStatusBackground:	         0.19 0.28 0.38
-AssetUpdateStatusText:			         white
+AssetUpdateStatusText:			         g9
 OrboltSplashscreenProgressbar:	         0.19 0.28 0.38
 
 MplayInspectBox:		                 GREY(0.8)
 MplayInspectBorder:		                 GREY(0.3)
-MplayInspectText:		                 black
+MplayInspectText:		                 g0
 MplayColorCorrectWarn:	                 1 1 0.75
 
 // Used on pane tabs to indicate data type
@@ -644,7 +645,7 @@ ChannelEditorStatsText:		    	    1.00 1.00 1.00    // Color of the stats text
 ChannelEditorTimeText:		    	    EDIT_BG	          // Color of the bottom time text
 ChannelEditorViewLock:		    	    GREY(0.5)
 
-ChannelListCircleOutline:	    	    black
+ChannelListCircleOutline:	    	    g0
 
 // CHOP EDITOR COLORS //
 
@@ -703,8 +704,7 @@ GeoGroupColor2:                 hsv 330.0 0.6 1.0
 
 // Editors and input boxes
 
-ParmSyntaxPlainColora:	        white			    // White	    #ffffff
-ParmSyntaxPlainColor: white
+ParmSyntaxPlainColor:           g9
 ParmSyntaxStringColor:	        HSV 120 0.5  0.80	// Green	    #66cc66
 ParmSyntaxVarColor:		        HSV 60	0.5  0.93	// Pale Yellow	#eded77
 ParmSyntaxFuncColor:	        HSV 180 0.5  0.80	// Cyan		    #66cccc
@@ -720,46 +720,46 @@ ParmParenMatchColor:	        HSV 120 0.6	0.6	    // Medium Green	#66ff66
 ParmQuoteMatchColor:	        HSV 180	0.6	0.6	    // Medium Cyan	#66ffff
 ParmMisMatchColor:		        HSV 0	0.6	0.6	    // Pale Red	    #ff6666
 
-PreEditUnderlineColor:		    dark
-TextboxLineNumberFG:		    mid
-TextboxLineNumberBG:		    darker
-TextboxLineNumberHighlight:	    lite
+PreEditUnderlineColor:		    g4
+TextboxLineNumberFG:		    g5
+TextboxLineNumberBG:		    g4
+TextboxLineNumberHighlight:	    g8
 
 // OLD UI RESOURCES //
 
 ForegroundColor:	            #010101
-BackgroundColor:	            black
-PaperColor:			            black
-TextHighlightColor:	            white
+BackgroundColor:	            g0
+PaperColor:			            g0
+TextHighlightColor:	            g9
 
-ButtonColor:		            dark
-ButtonStripColor:	            dark
+ButtonColor:		            g4
+ButtonStripColor:	            g4
 
-ListTitleColor:		            dark
+ListTitleColor:		            g4
 ListEntryColor:		            GREY(0.62)
 ListEntrySelectedColor:	        0.93 0.86 0.51
 
-MenuBarColor:		            black
-MenuColor:		                black
+MenuBarColor:		            g0
+MenuColor:		                g0
 BlueSelectedMenuColor:	        0.125 0.125 1
 
-SliderColor:		            mid
-SliderThumbColor:	            mid
-InputColor:		                mid
-RadioColor:		                mid
+SliderColor:		            g5
+SliderThumbColor:	            g5
+InputColor:		                g5
+RadioColor:		                g5
 
-IconBackgroundColor:	        dark
-IconOutlineColor:	            dark
-IconShadowColor:	            dark
+IconBackgroundColor:	        g4
+IconOutlineColor:	            g4
+IconShadowColor:	            g4
 IconLocatedColor:	            red
 
-DisabledTextColor:		        arrow
+DisabledTextColor:		        g7
 DisabledTextDropShadowColor:    GREY(0.8)
-PopupHelpBackgroundColor:	    selection_hilite
+PopupHelpBackgroundColor:	    g5
 
 // New colors for Popup windows (Ex. Anonymous Usage Stats Window)
 
-PopupWindowTextColor:           white
+PopupWindowTextColor:           g9
 BlueTextLinkColor:              #FF00FF
 
 // The luminance levels of most of these colors should be similar
@@ -786,7 +786,7 @@ ScopedBlend:		            0.9  0.25  0.97
 ScopedBaseColor:	            EDIT_BG
 ScopedColor:		            HSV  40  0.825  0.525
 ScopedBaseSelectedColor:        EDIT_BG
-ScopedSelectedColor:	        white
+ScopedSelectedColor:	        g9
 #AutoScopedColor:	            HSV  40  0.125  0.375  // Low saturation orange grey, This matches the orange selection Hue.
 AutoScopedColor:	            HSV  210 0.125  0.375 // Low saturation blue grey, This matches the blue slider Hue.
 
@@ -796,7 +796,7 @@ ScopedAlpha:		            1.0 1.0 1.0
 
 InvisibleHandleColor:	        0.70  0.00  0.00  // See rows/columns in Torus SOP
 VisibleHandleColor:	            0.00  0.50  0.50
-ActiveHandleColor:	            mid
+ActiveHandleColor:	            g5
 
 // FLAG BUTTONS group and node tiles and listers //
 
@@ -814,14 +814,14 @@ ExposeOnColor:		            1	  0	0
 ExposeOffColor:		            0.6	  0	0
 CurrentColor:		            0.25  0.85	0.25
 
-SplitBarBackground:             dark
-SplitBarEdgeColor:	            dark
-SplitBarLightColor:	            dark
-SplitBarDarkColor:	            dark
-SplitBarPaneOutline:            mid
-SplitBarGrippyColor:            mid
-SplitBarHighlight:	            mid
-SplitBarHighlight2:	            red
+SplitBarBackground:             g4
+SplitBarEdgeColor:	            g4
+SplitBarLightColor:	            g4
+SplitBarDarkColor:	            g4
+SplitBarPaneOutline:            g5
+SplitBarGrippyColor:            g5
+SplitBarHighlight:	            g5
+SplitBarHighlight2:	            g5
 
 PlayBarOnColor:		            0.05  0.8   0.05
 PlayBarOffColor:	            0.25  0.25  0.25
@@ -939,7 +939,7 @@ HyperTextLinkColor:	            1.0 0.0 1.0
 // some arbitrary thing.  (Network BG color?)  Anyway, leaving the value
 // at one seems to force it into a happy state.
 
-OpNameNoneColor:	            lite
+OpNameNoneColor:	            g8
 OpNameCommentsColor:	        HSV 240 0.6 1
 OpNameAnimatedColor:	        red
 OpNameModifiedColor:	        red
@@ -984,9 +984,9 @@ LinkerPartialLinkColor:	        GREY(0.8)
 // NETWORK EDITOR LIST MODE //
 
 OpListHeaderBGColor:	        GREY(0.7)
-OpListSplitterColor:	        black
-OpListSelectionBGColor:	        mid
-OpListSelectionFGColor:	        white
+OpListSplitterColor:	        g0
+OpListSelectionBGColor:	        g5
+OpListSelectionFGColor:	        g9
 
 // FILE DEPENDENCY DIALOG //
 
@@ -1013,8 +1013,8 @@ KeyCapDefaultHover:             #959595
 ModifierKeyOffFill:             #292929
 ModifierKeyOffHover:            #393939
 
-KeyCapSelectionBorder:          white
-KeyCapSelectionText:            white
+KeyCapSelectionBorder:          g9
+KeyCapSelectionText:            g9
 
 ShiftKeyBorder:                 #7F5050
 ShiftKeyFill:                   #AF7070
@@ -1052,7 +1052,7 @@ UsdAttrResolveNone:		        grey50
 UsdRelationship:		        #E68484
 UsdComputed:			        #8484E6
 
-UsdPrimSelected:		        mid
+UsdPrimSelected:		        g5
 UsdPrimSelectedAlpha:		    0.4
 UsdChildPrimSelected:           0.44 0.22 0.11
 UsdChildPrimSelectedAlpha:      0.4

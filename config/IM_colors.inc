@@ -1,25 +1,20 @@
 #define error		     HSV 20 0.5 0.5
 
-#define well		     #101010
-#define shadow           #101010
+#define g0 #000000
+#define g1 #101010
+#define g2 #151515
+#define g3 #181818
+#define g4 #202020
+#define g5 #404040
+#define g6 #505050
+#define g7 #909090
+#define g8 #a0a0a0
+#define g9 #ffffff
 
-#define selection_hilite #404040
-#define selection_shadow #202020
+#define blue   #3047ba
+#define green  #00ff00
+#define red	   #ff0000
 
-#define list_a		     #181818
-#define list_b		     #101010
-
-#define blue             #3047ba
-#define green		     #00ff00
-#define red			     #ff0000
-#define white            #ffffff
-
-#define arrow		     #909090
-#define text             #909090
-#define pressed_arrow    #505050
-
-#define black            #000000
-#define dark             #202020
-#define darker           #202020
-#define mid              #404040
-#define lite             #a0a0a0
+#define b0 #000036
+#define b1 #114BD3
+#define b2 #116CD3
