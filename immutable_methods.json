@@ -1,0 +1,25 @@
+{
+	"env" :
+    [
+        {
+            "HOUDINI_PATH" :
+                [
+                    { "houdini_os == 'linux'" : "/Users/lucas-alma/Dropbox/repos/immutable_methods" },
+                    { "houdini_os == 'macos'" : "/Users/lucas/Dropbox/repos/immutable_methods" }
+                ]
+        },
+        {
+            "PYTHONPATH": 
+                [
+                    { "houdini_os == 'linux'" : "/Users/lucas-alma/Dropbox/repos/immutable_methods/scripts" },
+                    { "housini_os == 'macos'" : "/Users/lucas/Dropbox/repos/immutable_methods/scripts" }
+                ]
+        },
+        {
+            "HOUDINI_UI_CURSOR_PATH":
+                [
+                    { "houdini_os == 'linux'" : "/Users/lucas-alma/Dropbox/repos/immutable_methods/config/cursors_linux" }
+                ]
+        }
+    ]
+}
