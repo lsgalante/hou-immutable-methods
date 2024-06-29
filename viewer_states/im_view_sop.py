@@ -14,20 +14,26 @@ def createViewerStateTemplate():
 
     # CONTEXT MENU
     menu = hou.ViewerStateMenu('im_viewer_menu', 'IM Viewer')
-    menu.addActionItem('reset', 'Reset')
-    menu.addActionItem('set_home', 'Set Home')
-    menu.addActionItem('set_frame', 'Set Frame')
-    menu.addActionItem('set_pivot', 'Set Pivot')
-    menu.addActionItem('print_cam_vals', 'Print Cam Vals')
+    menu.addActionItem('reset'          , 'Reset')
+    menu.addActionItem('set_home'       , 'Set Home')
+    menu.addActionItem('set_frame'      , 'Set Frame')
+    menu.addActionItem('set_pivot'      , 'Set Pivot')
+    menu.addActionItem('print_cam_vals' , 'Print Cam Vals')
     template.bindMenu(menu)
+
+    # PARAMS
+    template.bindParameter( hou.parmTemplateType.Int, name="scale",
+      label="Scale", default_value=5 )
+
+    template.bindParameter( hou.parmTemplateType.Float, name="pivot",
+      label="Pivot", num_components=3 )
 
     # BIND IT
     template.bindFactory(im_view_common.State)
     template.bindIcon("DESKTOP_application_sierra")
 
     # HANDLE
-    template.bindHandleStatic(
-      "xform", "start_handle",
+    template.bindHandleStatic( "xform", "start_handle",
       [("startx", "tx"), ("starty", "ty"), ("startz", "tz")]
     )
         
