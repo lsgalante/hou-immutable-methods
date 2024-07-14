@@ -1,43 +1,43 @@
 #include "NodeGraphCommon.inc"
 #include "IM_colors.inc"
 
-PaletteBackground:					g2
+PaletteBackground:					grey2
 PaletteSelected:					YELLOW
-ShapePaletteShape:					g7
+ShapePaletteShape:					grey7
 
-BackgroundImageLocate:				g9
+BackgroundImageLocate:				grey9
 BackgroundImageBorder:				YELLOW
 BackgroundImageBrightness:			YELLOW
 BackgroundImageLink:				GREY(0.8)
 
 GraphOverlayLeftText:				0.2 0.9 0.9
 GraphOverlayCenterText:				0.7 0.7 0.7
-GraphOverlayRightText:				g9
+GraphOverlayRightText:				grey9
 
-GraphBackground:					g0
+GraphBackground:					grey0
 GraphOverviewBackground:			GREY(0.10)
 GraphOverviewViewRegion:			0.5 0.3 0.5
-GraphOverviewBorder:				g0
+GraphOverviewBorder:				grey0
 GraphPromptText:		    		#404040
 GraphGridLines:			    		#303030
 GraphGridPoints:		    		#303030
 
-GraphNameText:		    	   		g9
-GraphNodeTypeText:		       		g7
-GraphCommentText:		       		g7
-GraphDescriptiveNameText:	   		g7
+GraphNameText:		    	   		grey9
+GraphNodeTypeText:		       		grey7
+GraphCommentText:		       		grey7
+GraphDescriptiveNameText:	   		grey7
 GraphContextOptionDepsText:	   		#6DB4BD
 GraphLopLastModifiedPrimText:  		#6DB4BD
 GraphLopLayerCountText:	       		#6DB4BD
 GraphOutputForViewText:		   		#6DB4BD
-GraphDetailIdText:		       		g7
-GraphNetworkBoxText:		   		g9
-GraphNetworkBoxTextDark:	   		g0
+GraphDetailIdText:		       		grey7
+GraphNetworkBoxText:		   		grey9
+GraphNetworkBoxTextDark:	   		grey0
 GraphNetworkBoxNameText:       		#76A8E1
-GraphIndirectText:		       		g9
-GraphIndirectTextDark:		   		g0
+GraphIndirectText:		       		grey9
+GraphIndirectTextDark:		   		grey0
 
-GraphItemBorder:		       		g0
+GraphItemBorder:		       		grey0
 GraphMinimizeButton:		   		GREY(0.8)
 
 GraphTemplateFlag:		       		#DD7DD7
@@ -52,7 +52,7 @@ GraphHiddenFlag:		       		#90BECD
 GraphAudioFlag:			       		0.0 0.5 0.5
 GraphThumbnailFlag:		       		0.35 0.6 0.2
 GraphLockFlag:			       		#FF 33 00
-GraphSoftLockFlag:		       		#C4 E3 61 
+GraphSoftLockFlag:		       		#C4 E3 61
 GraphDebugFlag:			       		#6CC6B2
 GraphMaterialFlag:		       		0.75 0.4 0.0
 GraphDisplayAndRenderFlag:	   		0.00 0.68 0.94
@@ -78,7 +78,7 @@ GraphSopRestGeometry:				0.584 0.776 1.0
 GraphSopCapturePose:				0.6 0.6 0.6
 GraphSopAnimatedPose:				1.0 0.725 0.0
 
-GraphConnector:						g7
+GraphConnector:						grey7
 GraphConnectorLabel:				GREY(0.70)
 GraphConnectorError:				#CE5E5E
 GraphCopMaskInput:					0.50 0.80 0.50
@@ -93,7 +93,7 @@ GraphWireLongerFaded:				0.5 0.5 0.5
 GraphWireStub:						GREY(0.70)
 GraphWireStubSelection:				YELLOW
 GraphWireCut:						RED
-GraphWireCutPath:					0.95 0.3 0.0 
+GraphWireCutPath:					0.95 0.3 0.0
 GraphWireStitchStart:				#B8E986
 GraphWireStitchEnd:					#B8E986
 GraphSpareWire:						#8967D9
@@ -109,12 +109,12 @@ GraphPreSelection:					0.75 0.86 1.0
 GraphItemCurrent:					#FFD400
 GraphItemCurrentNonSelected:		#C89C9C
 GraphItemSelection:					#EEF81C
-GraphItemSelectionContrast:			g0
+GraphItemSelectionContrast:			grey0
 GraphItemContentsSelection:			#6E780C
 GraphSnapLine:						#5C704D
 
-GraphFlyoutBackgroundFlagOn:		g0
-GraphFlyoutBackgroundFlagOff:		g0
+GraphFlyoutBackgroundFlagOn:		grey0
+GraphFlyoutBackgroundFlagOff:		grey0
 GraphFlyoutEdgeFlagOff:				GREY(0.3)
 GraphFlyoutInfo:					GREY(0.1)
 GraphFlyoutWarning:					0.2 0.2 0.0
@@ -125,16 +125,16 @@ GraphDotPinAccent:					GREY(0.3)
 GraphCopPreviewBackground:			GREY(0.1)
 GraphCopBottomButtonEnabled:		GREY(0.1)
 
-GraphVopConnectorGroupName:			g9
-GraphVopConnectorBackground:		_5				// VOP node bg
+GraphVopConnectorGroupName:			grey9
+GraphVopConnectorBackground:		red9				// VOP node bg
 GraphVopBottomButtonEnabled:		GREY(0.1)
 GraphVopBottomButtonDisabled:		GREY(0.6)
 
 GraphShopConnectorBackground:		GREY(0.1)
 
-GraphSubnetShadow1:					g0
+GraphSubnetShadow1:					grey0
 GraphSubnetShadowBlend1:			0.6
-GraphSubnetShadow2:					g9
+GraphSubnetShadow2:					grey9
 GraphSubnetShadowBlend2:			0.3
 
 GraphErrorBadgeDot:					err
@@ -165,7 +165,7 @@ GraphPopulationMaskBadgeDot:		#A06B9A
 GraphDiveableBadgeDot:				#73d216
 GraphLoadFromDiskBadgeDot:			#dceefaff
 
-GraphPdgProgressOutline:			g9
+GraphPdgProgressOutline:			grey9
 GraphPdgProgressPrecook:			#324D59
 GraphPdgProgressCooking:			#B8E986
 GraphPdgProgressCooked:				#4D623F
@@ -234,4 +234,3 @@ GraphLopLayerColor6:				0.90 0.20 0.90
 GraphLopLayerColor7:				0.20 0.70 0.30
 GraphLopLayerColor8:				0.20 0.40 0.60
 GraphLopLayerColor9:				0.20 0.10 0.90
-
