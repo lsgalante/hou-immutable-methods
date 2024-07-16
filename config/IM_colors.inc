@@ -5,7 +5,7 @@
 
 
 
-#define bluea0   #000036
+#define blue0   #000036
 #define blue1   #114BD3
 #define blue2   #116CD3
 #define blue3   #03022B
