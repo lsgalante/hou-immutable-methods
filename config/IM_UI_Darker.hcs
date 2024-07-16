@@ -86,7 +86,7 @@ SecondaryText:          	             grey8
 LinkText:               	             #64ACFF
 
 ToolbarBevelLight:			             grey2
-ToolbarBevelDark:			             red9
+ToolbarBevelDark:			             grey2
 ToolbarFlatGradHi:			             grey0
 ToolbarFlatGradLo:			             grey1
 
