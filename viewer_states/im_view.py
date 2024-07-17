@@ -20,6 +20,9 @@ class State(object):
         self.state_name = state_name
         self.viewer = scene_viewer
         self.reset = 1
+        self.x_axis = 1
+        self.y_axis = 1
+        self.z_axis = 1
 
         # Drawables
         self.axis_drawable = hou.GeometryDrawable(
@@ -38,21 +41,49 @@ class State(object):
         self.ray_drawable = hou.GeometryDrawable(
             scene_viewer=scene_viewer,
             geo_type=hou.drawableGeometryType.Line,
-            name="ray_drawable")
+            name="ray_drawable",
+            params={"color1": hou.Vector4((1, 1, 1, 0.5))})
         self.ray_drawable.show(True)
 
     ##
 
     def get_centroid(self):
-        return
+        display_node = self.viewer.pwd().displayNode()
+        geo = display_node.geometry()
+        result_geo = hou.Geometry()
+        centroid_verb = hou.sopNodeTypeCategory().nodeVerb("extractcentroid")
+        centroid_verb.setParms({"partitiontype": 2})
+        centroid_verb.execute(result_geo, [geo])
+        pt = result_geo.point(0)
+        p = pt.position()
+        return(p)
+
+    def get_direction(self):
+        r = self.state_parms["r"]["value"]
+        return(r)
+
+    def get_distance(self):
+        distance = self.state_parms["distance"]["value"]
+        return(distance)
+
+    def get_length(self):
+        t = self.state_parms["t"]["value"]
+        p = self.state_parms["p"]["value"]
+        length = t[2]
+        return(length)
 
     def get_xform(self):
         t = self.state_parms["t"]["value"]
         r = self.state_parms["r"]["value"]
-        print(self.state_parms["p"]["value"])
         p = self.state_parms["p"]["value"]
         pr = self.state_parms["pr"]["value"]
         return(t, r, p, pr)
+
+    def global_updates(self):
+        self.update_state_parms()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
 
     def handle_rotate(self, key):
         r = list(self.state_parms["r"]["value"])
@@ -66,7 +97,6 @@ class State(object):
         elif key == "l":
             r[1] = (r[1] - r_scale) % 360
         self.state_parms["r"]["value"] = r
-        self.update_cam()
 
     def handle_translate(self, key):
         t = list(self.state_parms["t"]["value"])
@@ -80,33 +110,46 @@ class State(object):
         elif key == "l":
             t[0] += t_scale
         self.state_parms["t"]["value"] = t
-        self.update_cam()
 
     def handle_xform(self, key):
         movement_style = "rotate"
         if self.state_parms["movement_style"]["value"]:
             movement_style = "translate"
         eval("self.handle_" + movement_style + "(key)")
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.global_updates()
 
     def handle_zoom(self, key):
         zoom_scale = self.state_parms["zoom_scale"]["value"]
-        if self.state_parms["projection"]["value"] == "orthographic":
+        if self.cam.evalParm("projection"):
             if key == "-": self.state_parms["ortho_width"]["value"] += zoom_scale
             elif key == "=": self.state_parms["ortho_width"]["value"] -= zoom_scale
         else:
             x=1
-        self.update_cam()
-        self.update_pivot_drawable()
+        self.global_updates()
+
+    def pivot_to_camera(self):
+        t = self.state_parms["t"]["value"]
+        r = self.state_parms["r"]["value"]
+        p = self.state_parms["p"]["value"]
+
+    def pivot_to_centroid(self):
+        centroid = self.get_centroid()
+        self.state_parms["true_center"]["value"] = list(centroid)
+        self.global_updates()
 
     def pivot_to_origin(self):
-        self.state_parms["p"]["value"] = [0, 0, 0]
-        self.cam.parmTuple("t").set((0, 0, 0))
+        t = self.state_parms["t"]["value"]
+        self.state_parms["p"]["value"][0] = -t[0]
+        self.state_parms["p"]["value"][1] = -t[1]
+        self.state_parms["p"]["value"][2] = -t[2]
+        self.global_updates()
 
     def print_cam_vals(self):
         t, r, p, pr = self.get_xform()
         print("r:\n", r, "t:\n", t, "p:\n", p, "pr:\n", pr)
+
+    def print_centroid(self):
+        print(self.get_centroid())
 
     def print_kwargs(self, kwargs):
         ui_event = str(kwargs["ui_event"])
@@ -123,15 +166,6 @@ class State(object):
         ratio = size[2] / size[3]
         self.cam.parm("aspect").set(ratio)
 
-    def reset_view(self):
-        self.state_parms["t"]["value"] = [0, 0, 4]
-        self.state_parms["r"]["value"] = [45, 45, 0]
-        self.state_parms["p"]["value"] = [0, 0, -4]
-        self.state_parms["pr"]["value"] = [0, 0, 0]
-        self.state_parms["ortho_width"]["value"] = 10
-        self.update_cam()
-        self.update_pivot_drawable()
-
     def set_cam(self):
         cam_exists = 0
         for node in hou.node("/obj").children():
@@ -143,14 +177,7 @@ class State(object):
         self.cam = hou.node("/obj/im_cam")
         self.viewport.setCamera(self.cam)
         self.viewport.lockCameraToView(True)
-        self.state_parms["projection"]["value"] = "orthographic"
-
-    def set_projection(self, projection):
-        print(projection)
-        if projection == "perspective":
-            self.state_parms["projection"]["value"] = "perspective"
-        elif projection == "orthographic":
-            self.state_parms["projection"]["value"] = "orthographic"
+        # self.state_parms["projection"]["value"] = "orthographic"
 
     def set_zoom_scale(self, key):
         if key == "Shift+-":
@@ -166,26 +193,31 @@ class State(object):
         p = self.cam.parmTuple("p").eval()
         r = self.cam.parmTuple("r").eval()
         pr = self.cam.parmTuple("pr").eval()
+        ortho_width = self.cam.evalParm("orthowidth")
         self.state_parms["t"]["value"] = list(t)
         self.state_parms["p"]["value"] = list(p)
         self.state_parms["r"]["value"] = list(r)
         self.state_parms["pr"]["value"] = list(pr)
+        self.state_parms["ortho_width"]["value"] = ortho_width
 
     def toggle_movement_style(self):
         movement_style = self.state_parms["movement_style"]["value"]
         movement_style = (movement_style + 1) % 2
         self.state_parms["movement_style"]["value"] = movement_style
 
-    def update_cam(self):
+    def toggle_projection(self):
+        projection = self.cam.evalParm("projection")
+        if projection:
+            self.cam.parm("projection").set(0)
+        else:
+            self.cam.parm("projection").set(1)
+
+    def update_cam_parms(self):
         t, r, p, pr = self.get_xform()
         self.cam.parmTuple("r").set(r)
         self.cam.parmTuple("t").set(t)
         self.cam.parmTuple("p").set(p)
         self.cam.parmTuple("pr").set(pr)
-        if self.state_parms["projection"]["value"] == "orthographic":
-            self.cam.parm("projection").set(1)
-        else:
-            self.cam.parm("projection").set(0)
         self.cam.parm("orthowidth").set(self.state_parms["ortho_width"]["value"])
 
     def update_hud(self):
@@ -195,6 +227,17 @@ class State(object):
             "movement_style": {"value": movement_style}
         }
         self.viewer.hudInfo(hud_values=updates)
+
+    def update_state_parms(self):
+        print("x")
+        true_center = self.state_parms["true_center"]["value"]
+        distance = self.state_parms["distance"]["value"]
+        self.state_parms["t"]["value"][0] = true_center[0]
+        self.state_parms["t"]["value"][1] = true_center[1]
+        self.state_parms["t"]["value"][2] = distance
+        self.state_parms["p"]["value"][0] = 0
+        self.state_parms["p"]["value"][1] = 0
+        self.state_parms["p"]["value"][2] = true_center[2] - distance
 
     def update_axis_drawable(self):
         axes = (self.state_parms["x_axis"]["value"],
@@ -239,29 +282,29 @@ class State(object):
         })
 
     def update_ray_drawable(self):
-        t, r, p, pr = self.get_xform()
+        t = self.state_parms["t"]["value"]
+        r = self.state_parms["r"]["value"]
+        p = self.state_parms["p"]["value"]
+        true_center = self.state_parms["true_center"]["value"]
+
+        rot = hou.hmath.buildRotate(r)
+        cam_pos = hou.Vector3(0, 0, self.get_length()) * rot
+        cam_pos += hou.Vector3(true_center[0], true_center[1], true_center[2])
+
+        pivot_pos = hou.Vector3(t) + hou.Vector3(p)
+
         geo = hou.Geometry()
-
-        cam_p = hou.Vector3(t)
-        cam_r = hou.hmath.buildRotate(r)
-        cam_p = cam_p * cam_r
-        cam_pt = geo.createPoint()
-        cam_pt.setPosition(cam_p)
-
-        pivot_p = hou.Vector3(t) + hou.Vector3(p)
-        pivot_pt = geo.createPoint()
-        pivot_pt.setPosition(pivot_p)
-
+        pts = geo.createPoints((cam_pos, pivot_pos))
         prim = geo.createPolygon()
-        prim.addVertex(cam_pt)
-        prim.addVertex(pivot_pt)
+        prim.addVertex(pts[0])
+        prim.addVertex(pts[1])
         self.ray_drawable.setGeometry(geo)
 
-    def view_frame(self):
-        self.viewport.frameAll()
-
-    def view_home(self):
-        self.viewport.home()
+    def frame_viewports(self):
+        for viewport in self.viewer.viewports():
+            viewport.frameAll()
+        self.cam_to_state()
+        self.update_pivot_drawable()
 
     ##
     ##
@@ -280,9 +323,7 @@ class State(object):
         self.update_axis_drawable()
         self.viewer.hudInfo(template=self.HUD_TEMPLATE)
         self.cam_to_state()
-        self.update_cam()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.global_updates()
 
     def onKeyEvent(self, kwargs):
         key = kwargs["ui_event"].device().keyString()
@@ -292,6 +333,9 @@ class State(object):
         elif key == "m":
             self.toggle_movement_style()
             self.update_hud()
+            return(True)
+        elif key == "o":
+            self.toggle_projection()
             return(True)
         elif key in("Shift+-", "Shift+="):
             self.set_zoom_scale(key)
@@ -310,10 +354,12 @@ class State(object):
         # Pivot menu
         if action == "pivot_to_origin":
             self.pivot_to_origin()
+        elif action == "pivot_to_centroid":
+            self.pivot_to_centroid()
 
         # View menu
-        elif action == "view_frame":
-            self.view_frame()
+        elif action == "frame_viewports":
+            self.frame_viewports()
         elif action == "reset_view":
             self.reset_view()
         elif action == "refit_ui":
@@ -333,54 +379,44 @@ class State(object):
 
         # Radio section
         elif action == "projection":
-            self.set_projection(kwargs["projection"])
+            self.toggle_projection()
         elif action == "movement_style":
             self.movement_style = kwargs["movement_style"]
 
-        # Print section
+        # Print menu
         elif action == "print_cam_vals":
             self.print_cam_vals()
         elif action == "print_kwargs":
             self.print_kwargs(kwargs)
+        elif action == "print_centroid":
+            self.print_centroid()
 
     def onParmChangeEvent(self, kwargs):
         parm = kwargs["parm_name"]
         # Button
-        if parm == "view_frame":
-            self.view_frame()
+        if parm == "frame_viewports":
+            self.frame_viewports()
         elif parm == "reset_view":
             self.reset_view()
         # Scale
         elif parm == "axis_scale":
             self.update_axis_drawable()
         # Menu
-        elif parm == "projection":
-            self.set_projection(kwargs["parm_value"])
         elif parm in ("x_axis", "y_axis", "z_axis"):
             self.update_axis_drawable()
 
+        elif parm == "distance":
+            self.global_updates()
+
         # Xform
         elif parm == "t":
-            if self.state_parms["lock_pivot"]["value"]:
-                new_p = kwargs["parm_value"]
-                for i in (0, 1, 2):
-                    new_p[i] *= -1
-                self.state_parms["p"] = new_p
-            self.update_cam()
-            self.update_pivot_drawable()
-            self.update_ray_drawable()
+            self.global_updates()
         elif parm == "r":
-            self.update_cam()
-            self.update_pivot_drawable()
-            self.update_ray_drawable()
+            self.global_updates()
         elif parm == "p":
-            self.update_cam()
-            self.update_pivot_drawable()
-            self.update_ray_drawable()
+            self.global_updates()
         elif parm == "pr":
-            self.update_cam()
-            self.update_pivot_drawable()
-            self.update_ray_drawable()
+            self.global_updates()
 
 def make_menu(template):
     menu = hou.ViewerStateMenu("im_view_menu", "IM View Menu")
@@ -418,12 +454,12 @@ def make_menu(template):
 
     pivot_menu = hou.ViewerStateMenu("pivot", "Pivot")
     pivot_menu.addActionItem("pivot_to_origin", "Move to Origin")
-    pivot_menu.addToggleItem("lock_pivot", "Lock Pivot", 1)
+    pivot_menu.addActionItem("pivot_to_centroid", "Move to Centroid")
     menu.addMenu(pivot_menu)
 
     view_menu = hou.ViewerStateMenu("view", "View")
     view_menu.addActionItem("reset_view",  "Reset")
-    view_menu.addActionItem("view_frame",  "Frame All")
+    view_menu.addActionItem("frame_viewports", "Frame Viewports")
     view_menu.addActionItem("refit_ui",    "Refit UI")
     view_menu.addSeparator()
     view_menu.addActionItem("top", "Top")
@@ -451,9 +487,7 @@ def make_menu(template):
 
     menu.addSeparator()
 
-    menu.addRadioStrip("projection", "Projection", "orthographic")
-    menu.addRadioStripItem("projection", "orthographic", "Orthographic")
-    menu.addRadioStripItem("projection", "perspective", "Perspective")
+    menu.addActionItem("toggle_projection", "Toggle Projection")
 
     menu.addRadioStrip("movement_style", "Movement style", "rotate")
     menu.addRadioStripItem("movement_style", "rotate", "Rotate")
@@ -461,14 +495,17 @@ def make_menu(template):
 
     menu.addSeparator()
 
-    menu.addActionItem("print_cam_vals", "Print Cam Vals")
-    menu.addActionItem("print_kwargs", "Print Kwargs")
+    print_menu = hou.ViewerStateMenu("print", "Print")
+    print_menu.addActionItem("print_cam_vals", "Print Cam Vals")
+    print_menu.addActionItem("print_kwargs", "Print Kwargs")
+    print_menu.addActionItem("print_centroid", "Print Centroid")
+    menu.addMenu(print_menu)
 
     template.bindMenu(menu)
 
 def make_parameters(template):
     template.bindParameter(hou.parmTemplateType.Button,
-        name="view_frame", label="Frame",
+        name="frame_viewports", label="Frame",
         align=True)
     template.bindParameter(hou.parmTemplateType.Button,
         name="reset_view", label="Reset")
@@ -493,10 +530,6 @@ def make_parameters(template):
         toolbox=False)
 
     template.bindParameter(hou.parmTemplateType.Menu,
-        name="projection", label="Projection",
-        menu_items = (('orthographic', 'Orthographic'), ("perspective", "Perspective")),
-        default_value="orthographic", toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Menu,
         name="movement_style", label="Movement",
         menu_items = (('rotate', 'Rotate'), ('translate', 'Translate')),
         default_value="rotate", toolbox=False)
@@ -509,13 +542,13 @@ def make_parameters(template):
     template.bindParameter(hou.parmTemplateType.Toggle,
         name="z_axis", label="Z",
         default_value=True, align=False, toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Toggle,
-        name="lock_pivot", label="Lock Pivot",
-        default_value=1, align=False, toolbox=False)
 
     template.bindParameter(hou.parmTemplateType.Separator, name="sep2",
         toolbox=False)
 
+    template.bindParameter(hou.parmTemplateType.Float,
+        name="distance", label="Distance",
+        default_value=10.0)
     template.bindParameter(hou.parmTemplateType.Float,
         name="ortho_width", label="Ortho Width",
         default_value=10.0)
@@ -534,6 +567,9 @@ def make_parameters(template):
         num_components=3, toolbox=False)
     template.bindParameter(hou.parmTemplateType.Float,
         name="pr", label="Pivot Rotation",
+        num_components=3, toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,
+        name="true_center", label="True Center",
         num_components=3, toolbox=False)
 
 def createViewerStateTemplate():
