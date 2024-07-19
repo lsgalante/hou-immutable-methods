@@ -10,23 +10,29 @@ def melog(msg):
         print("")
     print("Function called: " + msg)
 
+def memsg(msg):
+    x=1
+    if not x:
+        return
+    print("Message: " + msg)
 
 class State(object):
     HUD_TEMPLATE = {
         "title": "IM View",
         "rows": [
-            {"id": "key_mode",   "label": "Key Mode",    "value": "Viewer", "key": "M"},
-            {"id": "key_mode_g",  "type": "choicegraph", "count": 2},
-            {"id": "mode",       "label": "Mode:",       "value": "Rotate"},
-            {"id": "mode_g",      "type": "choicegraph", "count": 2},
-            {"id": "scale_mod",  "label": "Scale Mod:",  "value": "Rotate"},
-            {"id": "scale_mod_g", "type": "choicegraph", "count": 5},
-            {"id": "target",     "label": "Target:",     "value": "Camera"},
-            {"id": "target_g",    "type": "choicegraph", "count": 2},
-            {"id": "viewport",   "label": "Viewport",    "value": 0},
-            {"id": "viewport_g",  "type": "choicegraph", "count": 4},
-            {"id": "layout",     "label": "Layout",      "value": "Split"},
-            {"id": "layout_g",    "type": "choicegraph", "count": 3},
+            {"id": "key_mode",     "label": "Key Mode",    "key": "M"},
+            {"id": "key_mode_g",   "type":  "choicegraph", "count": 2},
+            {"type": "divider"},
+            {"id": "xform_mode",   "label": "Xform Mode:"},
+            {"id": "xform_mode_g", "type":  "choicegraph", "count": 2},
+            {"id": "scale_mod",    "label": "Scale Mod:"},
+            {"id": "scale_mod_g",  "type":  "choicegraph", "count": 5},
+            {"id": "target",       "label": "Target:"},
+            {"id": "target_g",     "type":  "choicegraph", "count": 2},
+            {"id": "viewport",     "label": "Viewport"},
+            {"id": "viewport_g",   "type":  "choicegraph", "count": 4},
+            {"id": "layout",       "label": "Layout"},
+            {"id": "layout_g",     "type":  "choicegraph", "count": 3},
         ]
     }
 
@@ -35,15 +41,22 @@ class State(object):
         self.viewer = scene_viewer
         self.reset = 1
         self.axes = [1, 1, 1]
-        self.xform_mode = "Rotate"
-        self.pivot_mode = "Floating"
-        self.scale_modifier = "Rotate"
-        self.current_viewport_id = 0
 
-        self.key_mode = "Viewer"
-        self.key_modes = ["Viewer", "Settings"]
-        self.modes = ["Rotate", "Translate"]
-        self.scales = ["Rotate", "Translate", "Zoom", "Distance", "FOV"]
+        # Variables for HUD
+        self.cur_key_mode   = "viewer"
+        self.key_mode_arr    = ("viewer", "settings")
+        self.cur_xform_mode = "rotate"
+        self.xform_mode_arr = ("rotate", "translate")
+        self.cur_scale_mod  = "rotate"
+        self.scale_mod_arr  = ("rotate", "translate", "zoom", "distance", "fov")
+        self.cur_target     = "camera"
+        self.target_arr     = ["camera", "pivot"]
+        self.cur_viewport   = ""
+        self.viewport_arr   = []
+        self.cur_layout     = "split"
+        self.layout_arr     = ("split", "spreadsheet", "full")
+        self.cur_setting    = "none"
+        self.setting_arr    = ("xform_mode", "scale_mod", "target", "viewport", "layout")
 
         # Drawables
         self.axis_drawable = hou.GeometryDrawable(
@@ -88,6 +101,38 @@ class State(object):
         self.state_parms["pr"]["value"] = list(pr)
         self.state_parms["ortho_width"]["value"] = ortho_width
 
+    def dispatch_settings(self, key):
+        melog("dispatch_settings")
+        idx = self.setting_arr.index(self.cur_setting)
+        if key == "j":
+            idx = (idx + 1) % len(self.setting_arr)
+        elif key == "k":
+            idx = (idx - 1) % len(self.setting_arr)
+        self.cur_setting = self.setting_arr[idx]
+        self.update_hud()
+
+
+    def dispatch_xform(self, key):
+        melog("dispatch_xform")
+        if key in ("Shift+h", "Shift+j", "Shift+k", "Shift+l"):
+            if self.cur_xform_mode == "rotate":
+                self.handle_translate(key)
+            elif self.cur_xform_mode == "translate":
+                self.handle_rotate(key)
+        elif key in ("h", "j", "k", "l"):
+            if self.cur_xform_mode == "rotate":
+                self.handle_rotate(key)
+            elif self.cur_xform_mode == "translate":
+                self.handle_translate(key)
+        elif key in ("Shift+-", "Shift+="):
+            self.set_zoom_scale(key)
+        elif key in("-", "="):
+            self.handle_zoom(key)
+        self.interpret_true_pivot()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
+
     def frame_viewports(self):
         melog("frame_viewports")
         for viewport in self.viewer.viewports():
@@ -109,7 +154,7 @@ class State(object):
     def get_current_viewport(self):
         melog("get_current_viewport")
         viewports = self.get_viewports()
-        viewport = viewports[self.current_viewport_id]
+        viewport = viewports[self.cur_viewport]
         return(viewport)
 
     def get_distance(self):
@@ -182,20 +227,6 @@ class State(object):
             true_pivot[0] += t_scale
         self.state_parms["true_pivot"]["value"] = true_pivot
 
-    def handle_xform(self, key):
-        melog("handle_xform")
-        if self.xform_mode == "Rotate":
-            if key in ["Shift+h", "Shift+j", "Shift+k", "Shift+l"]:
-                self.handle_translate(key)
-            else:
-                self.handle_rotate(key)
-        else:
-            if key in ["Shift+h", "Shift+j", "Shift+k", "Shift +l"]:
-                self.handle_rotate(key)
-            else:
-                self.handle_translate(key)
-        self.update_global()
-
     def handle_zoom(self, key):
         melog("handle_zoom")
         zoom_scale = self.state_parms["zoom_scale"]["value"]
@@ -204,7 +235,10 @@ class State(object):
             elif key == "=": self.state_parms["ortho_width"]["value"] -= zoom_scale
         else:
             x=1
-        self.update_global()
+        self.interpret_true_pivot()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
 
     def init_cam(self):
         melog("init_cam")
@@ -220,8 +254,27 @@ class State(object):
         self.viewport.setCamera(self.cam)
         self.viewport.lockCameraToView(True)
 
+    def interpret_true_pivot(self):
+        melog("interpret_true_pivot")
+        true_pivot = self.state_parms["true_pivot"]["value"]
+        distance = self.state_parms["distance"]["value"]
+        self.state_parms["t"]["value"][0] = true_pivot[0]
+        self.state_parms["t"]["value"][1] = true_pivot[1]
+        self.state_parms["t"]["value"][2] = distance
+        self.state_parms["p"]["value"][0] = 0
+        self.state_parms["p"]["value"][1] = 0
+        self.state_parms["p"]["value"][2] = true_pivot[2] - distance
+
     def next_key_mode(self):
         melog("next_key_mode")
+        idx = self.key_mode_arr.index(self.cur_key_mode)
+        idx = (idx + 1) % len(self.key_mode_arr)
+        self.cur_key_mode = self.key_mode_arr[idx]
+        if idx == 0:
+            self.cur_setting = "none"
+        elif idx == 1:
+            self.cur_setting = self.setting_arr[0]
+        self.update_hud()
 
     def next_projection(self):
         melog("next_projection")
@@ -231,38 +284,44 @@ class State(object):
         else:
             self.cam.parm("projection").set(1)
 
-    def next_scale_modifier(self):
-        melog("next_scale_modifier")
-        idx = self.scales.index(self.scale_modifier)
-        self.scale_modifier = self.scales[(idx + 1) % len(self.scales)]
+    def next_scale_mod(self):
+        melog("next_scale_mod")
+        idx = self.scale_mod_arr.index(self.cur_scale_mod)
+        self.cur_scale_mod = self.scale_mod_arr[(idx + 1) % len(self.scale_mod_arr)]
         self.update_hud()
 
     def next_viewport(self):
         melog("next_viewport")
-        self.current_viewport_id = (self.current_viewport_id + 1) % 4
+        self.cur_viewport = (self.cur_viewport + 1) % 4
         viewports = list(self.viewer.viewports())
         viewports.reverse()
-        viewport = viewports[self.current_viewport_id]
+        viewport = viewports[self.cur_viewport]
         print(viewport)
         self.update_hud()
 
     def next_xform_mode(self):
         melog("next_xform_mode")
-        idx = self.modes.index(self.xform_mode)
-        self.xform_mode = self.modes[(idx + 1) % len(self.modes)]
+        idx = self.xform_mode_arr.index(self.cur_xform_mode)
+        self.cur_xform_mode = self.xform_mode_arr[(idx + 1) % len(self.xform_mode_arr)]
         self.update_hud()
 
     def pivot_to_camera(self):
         melog("pivot_to_camera")
         t = self.state_parms["t"]["value"]
         self.state_parms["true_pivot"]["value"] = list(t)
-        self.update_global()
+        self.interpret_true_pivot()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
 
     def pivot_to_centroid(self):
         melog("pivot_to_centroid")
         centroid = self.get_centroid()
         self.state_parms["true_pivot"]["value"] = list(centroid)
-        self.update_global()
+        self.interpret_true_pivot()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
 
     def pivot_to_origin(self):
         melog("pivot_to_origin")
@@ -272,7 +331,10 @@ class State(object):
         self.state_parms["pr"]["value"] = [0, 0, 0]
         self.state_parms["true_pivot"]["value"] = [0, 0, 0]
         self.state_parms["ortho_width"]["value"] = 10
-        self.update_global()
+        self.interpret_true_pivot()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
 
     def print_cam_vals(self):
         melog("print_cam_vals")
@@ -309,7 +371,10 @@ class State(object):
         self.state_parms["pr"]["value"] = [0, 0, 0]
         self.state_parms["true_pivot"]["value"] = [0, 0, 0]
         self.state_parms["ortho_width"]["value"] = 10
-        self.update_global()
+        self.interpret_true_pivot()
+        self.update_cam_parms()
+        self.update_pivot_drawable()
+        self.update_ray_drawable()
 
     def set_zoom_scale(self, key):
         melog("set_zoom_scale")
@@ -388,23 +453,24 @@ class State(object):
         self.cam.parmTuple("pr").set(pr)
         self.cam.parm("orthowidth").set(self.state_parms["ortho_width"]["value"])
 
-    def update_global(self):
-        melog("update_global")
-        self.update_state_parms()
-        self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
-
     def update_hud(self):
         melog("update_hud")
         updates = {
-            "mode": {"value": self.xform_mode},
-            "mode_g": {"value": self.modes.index(self.xform_mode)},
-            "scale_modifier": {"value": self.scale_modifier},
-            "scale_modifier_g": {"value": self.scales.index(self.scale_modifier)},
-            "viewport": {"value": self.current_viewport_id},
-            "viewport_g": {"value": self.current_viewport_id}
+            "key_mode":     {"value": self.cur_key_mode.capitalize()},
+            "key_mode_g":   {"value": self.key_mode_arr.index(self.cur_key_mode)},
+            "xform_mode":   {"value": self.cur_xform_mode.capitalize()},
+            "xform_mode_g": {"value": self.xform_mode_arr.index(self.cur_xform_mode)},
+            "scale_mod":    {"value": self.cur_scale_mod.capitalize()},
+            "scale_mod_g":  {"value": self.scale_mod_arr.index(self.cur_scale_mod)},
+            "target":       {"value": self.cur_target.capitalize()},
+            "target_g":     {"value": self.target_arr.index(self.cur_target)},
+            "viewport":     {"value": self.cur_viewport.capitalize()},
+            "viewport_g":   {"value": self.viewport_arr.index(self.cur_viewport)},
+            "layout":       {"value": self.cur_layout.capitalize()},
+            "layout_g":     {"value": self.layout_arr.index(self.cur_layout)}
         }
+        if self.cur_setting != "none":
+            updates[self.cur_setting]["value"] = "[" + updates[self.cur_setting]["value"] + "]"
         self.viewer.hudInfo(hud_values=updates)
 
     def update_pivot_drawable(self):
@@ -445,21 +511,13 @@ class State(object):
         prim.addVertex(pts[1])
         self.ray_drawable.setGeometry(geo)
 
-    def update_state_parms(self):
-        melog("update_state_parms")
-        true_pivot = self.state_parms["true_pivot"]["value"]
-        distance = self.state_parms["distance"]["value"]
-        self.state_parms["t"]["value"][0] = true_pivot[0]
-        self.state_parms["t"]["value"][1] = true_pivot[1]
-        # self.state_parms["t"]["value"][2] = true_pivot[2] + distance
-        self.state_parms["t"]["value"][2] = distance
-        self.state_parms["p"]["value"][0] = 0
-        self.state_parms["p"]["value"][1] = 0
-        self.state_parms["p"]["value"][2] = true_pivot[2] - distance
-
-    def update_viewports(self):
+    def update_viewport_arr(self):
         melog("update_viewports")
-        self.viewports = self.get_viewports()
+        viewports = list(self.viewer.viewports())
+        viewports.reverse()
+        self.viewport_arr = []
+        for viewport in viewports:
+            self.viewport_arr.append(viewport.name())
 
     ##
     ##
@@ -475,34 +533,30 @@ class State(object):
         kwargs["state_flags"]["exit_on_node_select"] = False
         # Init vars
         self.viewer.hudInfo(template=self.HUD_TEMPLATE)
-        self.update_hud
         self.viewport = self.viewer.selectedViewport()
         self.state_parms = kwargs["state_parms"]
         # Call functions
         self.init_cam()
         self.cam_to_state()
         self.refit_ui()
+        self.update_viewport_arr()
+        self.cur_viewport = self.viewport_arr[0]
+        self.update_hud()
         self.update_axis_drawable()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
         self.reset_view()
 
     def onKeyEvent(self, kwargs):
         melog("onKeyEvent")
         key = kwargs["ui_event"].device().keyString()
-        # Shifties
-        if key[-1] in ("h", "j", "k", "l"):
-            self.handle_xform(key)
-            return(True)
-        elif key in("Shift+-", "Shift+="):
-            self.set_zoom_scale(key)
-            return(True)
-        # Non-shifties
-        elif key == "m":
+        if key == "m":
             self.next_key_mode()
             return(True)
-        elif key in("-", "="):
-            self.handle_zoom(key)
+        elif key in ["h", "j", "k", "l", "-", "=", "Shift+h", "Shift+j",
+            "Shift+k", "Shift+l", "Shift+-", "Shift+="]:
+            if self.cur_key_mode == "viewer":
+                self.dispatch_xform(key)
+            elif self.cur_key_mode == "settings":
+                self.dispatch_settings(key)
             return(True)
         else:
             return(False)
@@ -544,21 +598,31 @@ class State(object):
 
     def onParmChangeEvent(self, kwargs):
         melog("onParmChangeEvent")
-        parm = kwargs["parm_name"]
-        if parm == "axis_scale":
+        make_updates = (0, 0, 0, 0, 0)
+        if kwargs["parm_name"] == "axis_scale":
+            make_updates = (1, 0, 0, 0, 0)
+        elif kwargs["parm_name"] == "distance":
+            make_updates = (0, 1, 1, 1, 1)
+        elif kwargs["parm_name"] == "t":
+            make_updates = (0, 1, 1, 1, 1)
+        elif kwargs["parm_name"] == "r":
+            make_updates = (0, 1, 1, 1, 1)
+        elif kwargs["parm_name"] == "p":
+            make_updates = (0, 1, 1, 1, 1)
+        elif kwargs["parm_name"] == "pr":
+            make_updates = (0, 1, 1, 1, 1)
+        elif kwargs["parm_name"] == "true_pivot":
+            make_updates = (0, 1, 1, 1, 1)
+        if make_updates[0]:
             self.update_axis_drawable()
-        elif parm == "distance":
-            self.update_global()
-        elif parm == "t":
-            self.update_global()
-        elif parm == "r":
-            self.update_global()
-        elif parm == "p":
-            self.update_global()
-        elif parm == "pr":
-            self.update_global()
-        elif parm == "true_pivot":
-            self.update_global()
+        if make_updates[1]:
+            self.interpret_true_pivot()
+        if make_updates[2]:
+            self.update_cam_parms()
+        if make_updates[3]:
+            self.update_pivot_drawable()
+        if make_updates[4]:
+            self.update_ray_drawable()
 
 def make_menu(template):
     menu = hou.ViewerStateMenu("im_view_menu", "IM View Menu")
