@@ -2,7 +2,7 @@ import hou
 import viewerstate.utils as su
 import pprint
 
-def melog(msg):
+def func_log(msg):
     x = 1
     if not x:
        return
@@ -20,14 +20,14 @@ class State(object):
     HUD_TEMPLATE = {
         "title": "IM View",
         "rows": [
-            {"id": "key_mode",     "label": "Key Mode",    "key": "M"},
+            {"id": "key_mode",     "label": "Key mode",    "key": "M"},
             {"id": "key_mode_g",   "type":  "choicegraph", "count": 2},
             {"type": "divider"},
-            {"id": "xform_mode",   "label": "Xform Mode:"},
+            {"id": "xform_mode",   "label": "Xform mode"},
             {"id": "xform_mode_g", "type":  "choicegraph", "count": 2},
-            {"id": "scale_mod",    "label": "Scale Mod:"},
+            {"id": "scale_mod",    "label": "Scale mod"},
             {"id": "scale_mod_g",  "type":  "choicegraph", "count": 5},
-            {"id": "target",       "label": "Target:"},
+            {"id": "target",       "label": "Target"},
             {"id": "target_g",     "type":  "choicegraph", "count": 2},
             {"id": "viewport",     "label": "Viewport"},
             {"id": "viewport_g",   "type":  "choicegraph", "count": 4},
@@ -42,21 +42,22 @@ class State(object):
         self.reset = 1
         self.axes = [1, 1, 1]
 
-        # Variables for HUD
-        self.cur_key_mode   = "viewer"
-        self.key_mode_arr    = ("viewer", "settings")
-        self.cur_xform_mode = "rotate"
-        self.xform_mode_arr = ("rotate", "translate")
-        self.cur_scale_mod  = "rotate"
-        self.scale_mod_arr  = ("rotate", "translate", "zoom", "distance", "fov")
-        self.cur_target     = "camera"
-        self.target_arr     = ["camera", "pivot"]
-        self.cur_viewport   = ""
-        self.viewport_arr   = []
-        self.cur_layout     = "split"
-        self.layout_arr     = ("split", "spreadsheet", "full")
-        self.cur_setting    = "none"
-        self.setting_arr    = ("xform_mode", "scale_mod", "target", "viewport", "layout")
+        self.state_state = {
+            "key_mode": "viewer",
+            "key_mode_arr": ("viewer", "settings"),
+            "setting": "xform_mode",
+            "setting_arr": ("xform_mode", "scale_mod", "target", "viewport", "layout"),
+            "xform_mode": "rotate",
+            "xform_mode_arr": ("rotate", "translate"),
+            "scale_mod": "rotate",
+            "scale_mod_arr": ("rotate", "translate", "zoom", "distance", "fov"),
+            "target": "camera",
+            "target_arr": ["camera", "pivot"],
+            "viewport": "",
+            "viewport_arr": [],
+            "layout": "split",
+            "layout_arr": ("split", "spreadsheet", "full")
+        }
 
         # Drawables
         self.axis_drawable = hou.GeometryDrawable(
@@ -89,7 +90,7 @@ class State(object):
     ##
 
     def cam_to_state(self):
-        melog("cam_to_state")
+        func_log("cam_to_state")
         t = self.cam.parmTuple("t").eval()
         p = self.cam.parmTuple("p").eval()
         r = self.cam.parmTuple("r").eval()
@@ -102,46 +103,59 @@ class State(object):
         self.state_parms["ortho_width"]["value"] = ortho_width
 
     def dispatch_settings(self, key):
-        melog("dispatch_settings")
-        idx = self.setting_arr.index(self.cur_setting)
-        if key == "j":
-            idx = (idx + 1) % len(self.setting_arr)
-        elif key == "k":
-            idx = (idx - 1) % len(self.setting_arr)
-        self.cur_setting = self.setting_arr[idx]
+        func_log("dispatch_settings")
+        if key in ("j", "k"):
+            idx = self.state_state["setting_arr"].index(self.state_state["setting"])
+            if key == "j":
+                idx = (idx + 1) % len(self.state_state["setting_arr"])
+            elif key == "k":
+                idx = (idx - 1) % len(self.state_state["setting_arr"])
+            self.state_state["setting"] = self.state_state["setting_arr"][idx]
+        elif key in ("h", "l"):
+            idx = -1
+            mod = -1
+            setting = self.state_state["setting"]
+            array = self.state_state[setting + "_arr"]
+            print(array)
+            print(setting)
+            idx = array.index(self.state_state[setting])
+            mod = len(array)
+            if key == "h":
+                idx = (idx - 1) % mod
+            elif key == "l":
+                idx = (idx + 1) % mod
+            self.state_state[setting] = array[idx]
         self.update_hud()
 
-
     def dispatch_xform(self, key):
-        melog("dispatch_xform")
+        func_log("dispatch_xform")
         if key in ("Shift+h", "Shift+j", "Shift+k", "Shift+l"):
-            if self.cur_xform_mode == "rotate":
-                self.handle_translate(key)
-            elif self.cur_xform_mode == "translate":
-                self.handle_rotate(key)
+            if self.state_state["xform_mode"] == "rotate":
+                self.handle_xform("translate", key)
+            elif self.state_state["xform_mode"] == "translate":
+                self.handle_xform("rotate", key)
         elif key in ("h", "j", "k", "l"):
-            if self.cur_xform_mode == "rotate":
-                self.handle_rotate(key)
-            elif self.cur_xform_mode == "translate":
-                self.handle_translate(key)
+            if self.state_state["xform_mode"] == "rotate":
+                self.handle_xform("rotate", key)
+            elif self.state_state["xform_mode"] == "translate":
+                self.handle_xform("translate", key)
         elif key in ("Shift+-", "Shift+="):
             self.set_zoom_scale(key)
         elif key in("-", "="):
-            self.handle_zoom(key)
+            self.handle_xform("zoom", key)
         self.interpret_true_pivot()
         self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.update_drawable(("pivot", "ray"))
 
     def frame_viewports(self):
-        melog("frame_viewports")
+        func_log("frame_viewports")
         for viewport in self.viewer.viewports():
             viewport.frameAll()
         self.cam_to_state()
-        self.update_pivot_drawable()
+        self.update_drawable(("pivot"))
 
     def get_centroid(self):
-        melog("get_centroid")
+        func_log("get_centroid")
         geo = self.get_geo()
         result_geo = hou.Geometry()
         centroid_verb = hou.sopNodeTypeCategory().nodeVerb("extractcentroid")
@@ -152,96 +166,92 @@ class State(object):
         return(p)
 
     def get_current_viewport(self):
-        melog("get_current_viewport")
+        func_log("get_current_viewport")
         viewports = self.get_viewports()
-        viewport = viewports[self.cur_viewport]
+        viewport = viewports[self.state_state["viewport"]]
         return(viewport)
 
     def get_distance(self):
-        melog("get_distance")
+        func_log("get_distance")
         distance = self.state_parms["distance"]["value"]
         return(distance)
 
     def get_extrema(self):
-        melog("get_extrema")
+        func_log("get_extrema")
         geo = self.get_geo()
         bbox = geo.boundingBox()
 
     def get_geo(self):
-        melog("get_geo")
+        func_log("get_geo")
         display_node = self.viewer.pwd().displayNode()
         geo = display_node.geometry()
         return(geo)
 
     def get_length(self):
-        melog("get_length")
+        func_log("get_length")
         t = self.state_parms["t"]["value"]
         p = self.state_parms["p"]["value"]
         length = t[2]
         return(length)
 
     def get_view_direction(self):
-        melog("get_view_direction")
+        func_log("get_view_direction")
         r = self.state_parms["r"]["value"]
         return(r)
 
     def get_viewports(self):
-        melog("get_viewports")
+        func_log("get_viewports")
         viewports = self.viewer.viewports()
         viewports.reverse()
         return(viewports)
 
     def get_xform(self):
-        melog("get_xform")
+        func_log("get_xform")
         t = self.state_parms["t"]["value"]
         r = self.state_parms["r"]["value"]
         p = self.state_parms["p"]["value"]
         pr = self.state_parms["pr"]["value"]
         return(t, r, p, pr)
 
-    def handle_rotate(self, key):
-        melog("handle_rotate")
-        r = list(self.state_parms["r"]["value"])
-        r_scale = self.state_parms["r_scale"]["value"]
-        if key[-1] == "h":
-            r[1] = (r[1] + r_scale) % 360
-        elif key[-1] == "j":
-            r[0] = (r[0] - r_scale) % 360
-        elif key[-1] == "k":
-            r[0] = (r[0] + r_scale) % 360
-        elif key[-1] == "l":
-            r[1] = (r[1] - r_scale) % 360
-        self.state_parms["r"]["value"] = r
-
-    def handle_translate(self, key):
-        melog("handle_translate")
-        true_pivot = list(self.state_parms["true_pivot"]["value"])
-        t_scale = self.state_parms["t_scale"]["value"]
-        if key[-1] == "h":
-            true_pivot[0] -= t_scale
-        elif key[-1] == "j":
-            true_pivot[1] -= t_scale
-        elif key[-1] == "k":
-            true_pivot[1] += t_scale
-        elif key[-1] == "l":
-            true_pivot[0] += t_scale
-        self.state_parms["true_pivot"]["value"] = true_pivot
-
-    def handle_zoom(self, key):
-        melog("handle_zoom")
-        zoom_scale = self.state_parms["zoom_scale"]["value"]
-        if self.cam.evalParm("projection"):
-            if key == "-": self.state_parms["ortho_width"]["value"] += zoom_scale
-            elif key == "=": self.state_parms["ortho_width"]["value"] -= zoom_scale
-        else:
-            x=1
-        self.interpret_true_pivot()
-        self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+    def handle_xform(self, xform, key):
+        func_log("handle_xform")
+        if xform == "rotate":
+            r = list(self.state_parms["r"]["value"])
+            r_scale = self.state_parms["r_scale"]["value"]
+            if key[-1] == "h":
+                r[1] = (r[1] + r_scale) % 360
+            elif key[-1] == "j":
+                r[0] = (r[0] - r_scale) % 360
+            elif key[-1] == "k":
+                r[0] = (r[0] + r_scale) % 360
+            elif key[-1] == "l":
+                r[1] = (r[1] - r_scale) % 360
+            self.state_parms["r"]["value"] = r
+        elif xform == "translate":
+            true_pivot = list(self.state_parms["true_pivot"]["value"])
+            t_scale = self.state_parms["t_scale"]["value"]
+            if key[-1] == "h":
+                true_pivot[0] -= t_scale
+            elif key[-1] == "j":
+                true_pivot[1] -= t_scale
+            elif key[-1] == "k":
+                true_pivot[1] += t_scale
+            elif key[-1] == "l":
+                true_pivot[0] += t_scale
+            self.state_parms["true_pivot"]["value"] = true_pivot
+        elif xform == "zoom":
+            zoom_scale = self.state_parms["zoom_scale"]["value"]
+            if self.cam.evalParm("projection"):
+                if key == "-": self.state_parms["ortho_width"]["value"] += zoom_scale
+                elif key == "=": self.state_parms["ortho_width"]["value"] -= zoom_scale
+            else:
+                x=1
+            self.interpret_true_pivot()
+            self.update_cam_parms()
+            self.update_drawable(("pivot", "ray"))
 
     def init_cam(self):
-        melog("init_cam")
+        func_log("init_cam")
         x=1
         cam_exists = 0
         for node in hou.node("/obj").children():
@@ -255,7 +265,7 @@ class State(object):
         self.viewport.lockCameraToView(True)
 
     def interpret_true_pivot(self):
-        melog("interpret_true_pivot")
+        func_log("interpret_true_pivot")
         true_pivot = self.state_parms["true_pivot"]["value"]
         distance = self.state_parms["distance"]["value"]
         self.state_parms["t"]["value"][0] = true_pivot[0]
@@ -266,65 +276,30 @@ class State(object):
         self.state_parms["p"]["value"][2] = true_pivot[2] - distance
 
     def next_key_mode(self):
-        melog("next_key_mode")
-        idx = self.key_mode_arr.index(self.cur_key_mode)
-        idx = (idx + 1) % len(self.key_mode_arr)
-        self.cur_key_mode = self.key_mode_arr[idx]
-        if idx == 0:
-            self.cur_setting = "none"
-        elif idx == 1:
-            self.cur_setting = self.setting_arr[0]
-        self.update_hud()
-
-    def next_projection(self):
-        melog("next_projection")
-        projection = self.cam.evalParm("projection")
-        if projection:
-            self.cam.parm("projection").set(0)
-        else:
-            self.cam.parm("projection").set(1)
-
-    def next_scale_mod(self):
-        melog("next_scale_mod")
-        idx = self.scale_mod_arr.index(self.cur_scale_mod)
-        self.cur_scale_mod = self.scale_mod_arr[(idx + 1) % len(self.scale_mod_arr)]
-        self.update_hud()
-
-    def next_viewport(self):
-        melog("next_viewport")
-        self.cur_viewport = (self.cur_viewport + 1) % 4
-        viewports = list(self.viewer.viewports())
-        viewports.reverse()
-        viewport = viewports[self.cur_viewport]
-        print(viewport)
-        self.update_hud()
-
-    def next_xform_mode(self):
-        melog("next_xform_mode")
-        idx = self.xform_mode_arr.index(self.cur_xform_mode)
-        self.cur_xform_mode = self.xform_mode_arr[(idx + 1) % len(self.xform_mode_arr)]
+        func_log("next_key_mode")
+        idx = self.state_state["key_mode_arr"].index(self.state_state["key_mode"])
+        idx = (idx + 1) % len(self.state_state["key_mode_arr"])
+        self.state_state["key_mode"] = self.state_state["key_mode_arr"][idx]
         self.update_hud()
 
     def pivot_to_camera(self):
-        melog("pivot_to_camera")
+        func_log("pivot_to_camera")
         t = self.state_parms["t"]["value"]
         self.state_parms["true_pivot"]["value"] = list(t)
         self.interpret_true_pivot()
         self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.update_drawable(("pivot", "ray"))
 
     def pivot_to_centroid(self):
-        melog("pivot_to_centroid")
+        func_log("pivot_to_centroid")
         centroid = self.get_centroid()
         self.state_parms["true_pivot"]["value"] = list(centroid)
         self.interpret_true_pivot()
         self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.update_drawable(("pivot", "ray"))
 
     def pivot_to_origin(self):
-        melog("pivot_to_origin")
+        func_log("pivot_to_origin")
         self.state_parms["t"]["value"] = [0, 0, self.get_distance()]
         self.state_parms["r"]["value"] = [45, 45, 0]
         self.state_parms["p"]["value"] = [0, 0, -self.get_distance()]
@@ -333,20 +308,23 @@ class State(object):
         self.state_parms["ortho_width"]["value"] = 10
         self.interpret_true_pivot()
         self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.update_drawable(("pivot", "ray"))
 
     def print_cam_vals(self):
-        melog("print_cam_vals")
+        func_log("print_cam_vals")
         t, r, p, pr = self.get_xform()
         print("r:\n", r, "t:\n", t, "p:\n", p, "pr:\n", pr)
 
     def print_centroid(self):
-        melog("print_centroid")
+        func_log("print_centroid")
         print(self.get_centroid())
 
+    def print_hud_state(self):
+        func_log("print_hud_state")
+
+
     def print_kwargs(self, kwargs):
-        melog("print_kwargs")
+        func_log("print_kwargs")
         ui_event = str(kwargs["ui_event"])
         ui_event = ui_event.replace("\\n", "\n")
         del kwargs["ui_event"]
@@ -355,7 +333,7 @@ class State(object):
         print(ui_event)
 
     def refit_ui(self):
-        melog("refit_ui")
+        func_log("refit_ui")
         self.cam.parm("resx").set(1000)
         self.cam.parm("resy").set(1000)
         size = self.viewport.size()
@@ -363,7 +341,7 @@ class State(object):
         self.cam.parm("aspect").set(ratio)
 
     def reset_view(self):
-        melog("reset_view")
+        func_log("reset_view")
         dist = self.get_distance()
         self.state_parms["t"]["value"] = [0, 0, dist]
         self.state_parms["r"]["value"] = [45, 45, 0]
@@ -373,22 +351,21 @@ class State(object):
         self.state_parms["ortho_width"]["value"] = 10
         self.interpret_true_pivot()
         self.update_cam_parms()
-        self.update_pivot_drawable()
-        self.update_ray_drawable()
+        self.update_drawable(("pivot", "ray"))
 
     def set_zoom_scale(self, key):
-        melog("set_zoom_scale")
+        func_log("set_zoom_scale")
         if key == "Shift+-":
             self.state_parms["zoom_scale"]["value"] -= 1
         elif key == "Shift+=":
             self.state_parms["zoom_scale"]["value"] += 1
 
     def state_to_cam(self):
-        melog("state_to_cam")
+        func_log("state_to_cam")
         x=1
 
     def toggle_axes(self, kwargs, action):
-        melog("toggle_axes")
+        func_log("toggle_axes")
         if action == "show_all_axes":
             self.axes = [1, 1, 1]
         elif action == "hide_all_axes":
@@ -399,53 +376,83 @@ class State(object):
             self.axes[1] = kwargs["y_axis"]
         elif action == "z_axis":
             self.axes[2] = kwargs["z_axis"]
-        self.update_axis_drawable()
+        self.update_drawable(("axis"))
         print("\n----")
         print("Axis state: ", self.axes)
 
     def toggle_bbox(self, kwargs, action):
-        melog("toggle_bbox")
+        func_log("toggle_bbox")
         enabled = kwargs["toggle_bbox"]
-        self.update_bbox_drawable()
+        self.update_drawable(("bbox"))
 
-    def update_axis_drawable(self):
-        melog("update_axis_drawable")
-        axis_scale = self.state_parms["axis_scale"]["value"]
-        geo = hou.Geometry()
-        geo.addAttrib(hou.attribType.Point, "Cd", (1, 1, 1))
-        for idx in (0, 1, 2):
-            if self.axes[idx]:
-                p0 = [0, 0, 0]
-                p1 = [0, 0, 0]
-                p0[idx] = -axis_scale
-                p1[idx] = axis_scale
-                pts = geo.createPoints((p0, p1))
-                cd = [0, 0, 0]
-                cd[idx] = 1
-                pts[0].setAttribValue("Cd", cd)
-                pts[1].setAttribValue("Cd", cd)
-                prim = geo.createPolygon(is_closed=False)
-                prim.addVertex(pts[0])
-                prim.addVertex(pts[1])
-        self.axis_drawable.setGeometry(geo)
-        self.axis_drawable.setParams({"fade_factor": 0.0})
-
-    def update_bbox_drawable(self):
-        melog("update_bbox_drawable")
-        geo = self.get_geo()
-        bbox = geo.boundingBox()
-        p0 = (bbox[0], bbox[1], bbox[2])
-        p1 = (bbox[0], bbox[1], bbox[5])
-        p2 = (bbox[3], bbox[1], bbox[5])
-        p3 = (bbox[3], bbox[1], bbox[2])
-        p4 = (bbox[0], bbox[4], bbox[2])
-        p5 = (bbox[0], bbox[4], bbox[5])
-        p6 = (bbox[3], bbox[4], bbox[5])
-        p7 = (bbox[3], bbox[4], bbox[2])
-        print(bbox)
+    def update_drawable(self, drawable_arr):
+        func_log("update_drawable")
+        if "bbox" in drawable_arr:
+            geo = self.get_geo()
+            bbox = geo.boundingBox()
+            p0 = (bbox[0], bbox[1], bbox[2])
+            p1 = (bbox[0], bbox[1], bbox[5])
+            p2 = (bbox[3], bbox[1], bbox[5])
+            p3 = (bbox[3], bbox[1], bbox[2])
+            p4 = (bbox[0], bbox[4], bbox[2])
+            p5 = (bbox[0], bbox[4], bbox[5])
+            p6 = (bbox[3], bbox[4], bbox[5])
+            p7 = (bbox[3], bbox[4], bbox[2])
+            print(bbox)
+        if "axis" in drawable_arr:
+            axis_scale = self.state_parms["axis_scale"]["value"]
+            geo = hou.Geometry()
+            geo.addAttrib(hou.attribType.Point, "Cd", (1, 1, 1))
+            for idx in (0, 1, 2):
+                if self.axes[idx]:
+                    p0 = [0, 0, 0]
+                    p1 = [0, 0, 0]
+                    p0[idx] = -axis_scale
+                    p1[idx] = axis_scale
+                    pts = geo.createPoints((p0, p1))
+                    cd = [0, 0, 0]
+                    cd[idx] = 1
+                    pts[0].setAttribValue("Cd", cd)
+                    pts[1].setAttribValue("Cd", cd)
+                    prim = geo.createPolygon(is_closed=False)
+                    prim.addVertex(pts[0])
+                    prim.addVertex(pts[1])
+            self.axis_drawable.setGeometry(geo)
+            self.axis_drawable.setParams({"fade_factor": 0.0})
+        if "pivot" in drawable_arr:
+            r = list(self.state_parms["r"]["value"])
+            t = list(self.state_parms["t"]["value"])
+            p = list(self.state_parms["p"]["value"])
+            ortho_width = self.state_parms["ortho_width"]["value"]
+            s = ortho_width / 2
+            pos = hou.Vector3(p) + hou.Vector3(t)
+            geo = hou.Geometry()
+            circle_verb = hou.sopNodeTypeCategory().nodeVerb("circle")
+            circle_verb.setParms({"type": 1, "r": r, "t": pos, "scale": s * 0.015})
+            circle_verb.execute(geo, [])
+            self.pivot_drawable.setGeometry(geo)
+            self.pivot_drawable.setParams({
+                "color1": hou.Vector4(0.0, 0.0, 1, 1),
+                "fade_factor": 1.0
+            })
+        if "ray" in drawable_arr:
+            t = self.state_parms["t"]["value"]
+            r = self.state_parms["r"]["value"]
+            p = self.state_parms["p"]["value"]
+            true_pivot = self.state_parms["true_pivot"]["value"]
+            rot = hou.hmath.buildRotate(r)
+            cam_pos = hou.Vector3(0, 0, self.get_length()) * rot
+            cam_pos += hou.Vector3(true_pivot[0], true_pivot[1], true_pivot[2])
+            pivot_pos = hou.Vector3(t) + hou.Vector3(p)
+            geo = hou.Geometry()
+            pts = geo.createPoints((cam_pos, pivot_pos))
+            prim = geo.createPolygon()
+            prim.addVertex(pts[0])
+            prim.addVertex(pts[1])
+            self.ray_drawable.setGeometry(geo)
 
     def update_cam_parms(self):
-        melog("update_cam_parms")
+        func_log("update_cam_parms")
         t, r, p, pr = self.get_xform()
         self.cam.parmTuple("r").set(r)
         self.cam.parmTuple("t").set(t)
@@ -454,70 +461,32 @@ class State(object):
         self.cam.parm("orthowidth").set(self.state_parms["ortho_width"]["value"])
 
     def update_hud(self):
-        melog("update_hud")
+        func_log("update_hud")
         updates = {
-            "key_mode":     {"value": self.cur_key_mode.capitalize()},
-            "key_mode_g":   {"value": self.key_mode_arr.index(self.cur_key_mode)},
-            "xform_mode":   {"value": self.cur_xform_mode.capitalize()},
-            "xform_mode_g": {"value": self.xform_mode_arr.index(self.cur_xform_mode)},
-            "scale_mod":    {"value": self.cur_scale_mod.capitalize()},
-            "scale_mod_g":  {"value": self.scale_mod_arr.index(self.cur_scale_mod)},
-            "target":       {"value": self.cur_target.capitalize()},
-            "target_g":     {"value": self.target_arr.index(self.cur_target)},
-            "viewport":     {"value": self.cur_viewport.capitalize()},
-            "viewport_g":   {"value": self.viewport_arr.index(self.cur_viewport)},
-            "layout":       {"value": self.cur_layout.capitalize()},
-            "layout_g":     {"value": self.layout_arr.index(self.cur_layout)}
+            "key_mode":     {"value": self.state_state["key_mode"].capitalize()},
+            "key_mode_g":   {"value": self.state_state["key_mode_arr"].index(self.state_state["key_mode"])},
+            "xform_mode":   {"value": self.state_state["xform_mode"].capitalize()},
+            "xform_mode_g": {"value": self.state_state["xform_mode_arr"].index(self.state_state["xform_mode"])},
+            "scale_mod":    {"value": self.state_state["scale_mod"].capitalize()},
+            "scale_mod_g":  {"value": self.state_state["scale_mod_arr"].index(self.state_state["scale_mod"])},
+            "target":       {"value": self.state_state["target"].capitalize()},
+            "target_g":     {"value": self.state_state["target_arr"].index(self.state_state["target"])},
+            "viewport":     {"value": self.state_state["viewport"].capitalize()},
+            "viewport_g":   {"value": self.state_state["viewport_arr"].index(self.state_state["viewport"])},
+            "layout":       {"value": self.state_state["layout"].capitalize()},
+            "layout_g":     {"value": self.state_state["layout_arr"].index(self.state_state["layout"])}
         }
-        if self.cur_setting != "none":
-            updates[self.cur_setting]["value"] = "[" + updates[self.cur_setting]["value"] + "]"
+        if self.state_state["key_mode"] == "settings":
+            updates[self.state_state["setting"]]["value"] = "[" + updates[self.state_state["setting"]]["value"] + "]"
         self.viewer.hudInfo(hud_values=updates)
 
-    def update_pivot_drawable(self):
-        melog("update_pivot_drawable")
-        r = list(self.state_parms["r"]["value"])
-        t = list(self.state_parms["t"]["value"])
-        p = list(self.state_parms["p"]["value"])
-        ortho_width = self.state_parms["ortho_width"]["value"]
-        s = ortho_width / 2
-        pos = hou.Vector3(p) + hou.Vector3(t)
-        geo = hou.Geometry()
-        circle_verb = hou.sopNodeTypeCategory().nodeVerb("circle")
-        circle_verb.setParms({"type": 1, "r": r, "t": pos, "scale": s * 0.015})
-        circle_verb.execute(geo, [])
-        self.pivot_drawable.setGeometry(geo)
-        self.pivot_drawable.setParams({
-            "color1": hou.Vector4(0.0, 0.0, 1, 1),
-            "fade_factor": 1.0
-        })
-
-    def update_ray_drawable(self):
-        melog("update_ray_drawable")
-        t = self.state_parms["t"]["value"]
-        r = self.state_parms["r"]["value"]
-        p = self.state_parms["p"]["value"]
-        true_pivot = self.state_parms["true_pivot"]["value"]
-
-        rot = hou.hmath.buildRotate(r)
-        cam_pos = hou.Vector3(0, 0, self.get_length()) * rot
-        cam_pos += hou.Vector3(true_pivot[0], true_pivot[1], true_pivot[2])
-
-        pivot_pos = hou.Vector3(t) + hou.Vector3(p)
-
-        geo = hou.Geometry()
-        pts = geo.createPoints((cam_pos, pivot_pos))
-        prim = geo.createPolygon()
-        prim.addVertex(pts[0])
-        prim.addVertex(pts[1])
-        self.ray_drawable.setGeometry(geo)
-
     def update_viewport_arr(self):
-        melog("update_viewports")
+        func_log("update_viewports")
         viewports = list(self.viewer.viewports())
         viewports.reverse()
-        self.viewport_arr = []
+        self.state_state["viewport_arr"] = []
         for viewport in viewports:
-            self.viewport_arr.append(viewport.name())
+            self.state_state["viewport_arr"].append(viewport.name())
 
     ##
     ##
@@ -528,7 +497,7 @@ class State(object):
         self.ray_drawable.draw(kwargs["draw_handle"], {})
 
     def onGenerate(self, kwargs):
-        melog("onGenerate")
+        func_log("onGenerate")
         # Integrate with node graph
         kwargs["state_flags"]["exit_on_node_select"] = False
         # Init vars
@@ -540,29 +509,29 @@ class State(object):
         self.cam_to_state()
         self.refit_ui()
         self.update_viewport_arr()
-        self.cur_viewport = self.viewport_arr[0]
+        self.state_state["viewport"] = self.state_state["viewport_arr"][0]
         self.update_hud()
-        self.update_axis_drawable()
+        self.update_drawable(("axis"))
         self.reset_view()
 
     def onKeyEvent(self, kwargs):
-        melog("onKeyEvent")
+        func_log("onKeyEvent")
         key = kwargs["ui_event"].device().keyString()
         if key == "m":
             self.next_key_mode()
             return(True)
         elif key in ["h", "j", "k", "l", "-", "=", "Shift+h", "Shift+j",
             "Shift+k", "Shift+l", "Shift+-", "Shift+="]:
-            if self.cur_key_mode == "viewer":
+            if self.state_state["key_mode"] == "viewer":
                 self.dispatch_xform(key)
-            elif self.cur_key_mode == "settings":
+            elif self.state_state["key_mode"] == "settings":
                 self.dispatch_settings(key)
             return(True)
         else:
             return(False)
 
     def onMenuAction(self, kwargs):
-        melog("onMenuAction")
+        func_log("onMenuAction")
         action = kwargs["menu_item"]
         if action == "pivot_to_camera":
             self.pivot_to_camera()
@@ -597,7 +566,7 @@ class State(object):
             self.print_centroid()
 
     def onParmChangeEvent(self, kwargs):
-        melog("onParmChangeEvent")
+        func_log("onParmChangeEvent")
         make_updates = (0, 0, 0, 0, 0)
         if kwargs["parm_name"] == "axis_scale":
             make_updates = (1, 0, 0, 0, 0)
@@ -614,32 +583,31 @@ class State(object):
         elif kwargs["parm_name"] == "true_pivot":
             make_updates = (0, 1, 1, 1, 1)
         if make_updates[0]:
-            self.update_axis_drawable()
+            self.update_drawable(("axis"))
         if make_updates[1]:
             self.interpret_true_pivot()
         if make_updates[2]:
             self.update_cam_parms()
         if make_updates[3]:
-            self.update_pivot_drawable()
+            self.update_drawable(("pivot"))
         if make_updates[4]:
-            self.update_ray_drawable()
+            self.update_drawable(("ray"))
 
 def make_menu(template):
-    menu = hou.ViewerStateMenu("im_view_menu", "IM View Menu")
+    menu        = hou.ViewerStateMenu("im_view_menu", "IM View Menu")
+    axis_menu   = hou.ViewerStateMenu("axes", "Axes")
+    view_menu   = hou.ViewerStateMenu("view", "View")
+    layout_menu = hou.ViewerStateMenu("layout_menu", "Layout")
+    print_menu  = hou.ViewerStateMenu("print", "Print")
 
-    menu.addActionItem("pivot_to_camera", "Pivot to Camera")
+    menu.addActionItem("pivot_to_camera",   "Pivot to Camera")
     menu.addActionItem("pivot_to_centroid", "Pivot to Centroid")
-    menu.addActionItem("pivot_to_origin", "Pivot to Origin")
-
+    menu.addActionItem("pivot_to_origin",   "Pivot to Origin")
     menu.addSeparator()
-
-    menu.addActionItem("frame_viewports", "Frame Viewports")
-    menu.addActionItem("reset_view", "Reset View")
-    menu.addToggleItem("toggle_bbox", "Bounding Box", 0)
-
+    menu.addActionItem("frame_viewports",   "Frame Viewports")
+    menu.addActionItem("reset_view",        "Reset View")
+    menu.addToggleItem("toggle_bbox",       "Bounding Box", 0)
     menu.addSeparator()
-
-    axis_menu = hou.ViewerStateMenu("axes", "Axes")
     axis_menu.addActionItem("show_all_axes", "Show All")
     axis_menu.addActionItem("hide_all_axes", "Hide All")
     axis_menu.addSeparator()
@@ -647,68 +615,44 @@ def make_menu(template):
     axis_menu.addToggleItem("y_axis", "Y Axis", 1)
     axis_menu.addToggleItem("z_axis", "Z Axis", 1)
     menu.addMenu(axis_menu)
-
-    view_menu = hou.ViewerStateMenu("view", "View")
     view_menu.addActionItem("refit_ui", "Refit UI")
     view_menu.addSeparator()
-    view_menu.addActionItem("top", "Top")
+    view_menu.addActionItem("top",    "Top")
     view_menu.addActionItem("bottom", "Bottom")
-    view_menu.addActionItem("left", "Left")
-    view_menu.addActionItem("right", "Right")
-    view_menu.addActionItem("front", "Front")
-    view_menu.addActionItem("back", "Back")
+    view_menu.addActionItem("left",   "Left")
+    view_menu.addActionItem("right",  "Right")
+    view_menu.addActionItem("front",  "Front")
+    view_menu.addActionItem("back",   "Back")
     menu.addMenu(view_menu)
-    # menu.addToggleItem("toggle_grid", "Toggle Grid", 0)
-
-    layout_menu = hou.ViewerStateMenu("layout_menu", "Layout")
-    layout_menu.addRadioStrip("layout", "Layout", "spreadsheet")
+    layout_menu.addRadioStrip("layout",     "Layout",      "spreadsheet")
     layout_menu.addRadioStripItem("layout", "spreadsheet", "Spreadsheet")
-    layout_menu.addRadioStripItem("layout", "split", "Split")
-    layout_menu.addRadioStripItem("layout", "full", "Full")
+    layout_menu.addRadioStripItem("layout", "split",       "Split")
+    layout_menu.addRadioStripItem("layout", "full",        "Full")
     menu.addMenu(layout_menu)
-
     menu.addSeparator()
-
-    print_menu = hou.ViewerStateMenu("print", "Print")
     print_menu.addActionItem("print_cam_vals", "Cam Vals")
-    print_menu.addActionItem("print_kwargs", "Kwargs")
+    print_menu.addActionItem("print_kwargs",   "Kwargs")
     print_menu.addActionItem("print_centroid", "Centroid")
     menu.addMenu(print_menu)
-
     template.bindMenu(menu)
 
 def make_parameters(template):
-    template.bindParameter(hou.parmTemplateType.Separator,
-        "sep0", toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Int,
-        "axis_scale", "Axis Scale", default_value=4, toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Int,
-        "r_scale", "R Scale", default_value=15, toolbox=True)
-    template.bindParameter(hou.parmTemplateType.Int,
-        "t_scale", "T Scale", default_value=1, toolbox=True)
-    template.bindParameter(hou.parmTemplateType.Int,
-        "zoom_scale", "Z Scale", default_value=2, toolbox=True)
-    template.bindParameter(hou.parmTemplateType.Separator,
-        "sep1", toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "distance", "Distance", default_value=10.0)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "ortho_width", "FOV", default_value=10.0)
-    template.bindParameter(hou.parmTemplateType.Separator,
-        "sep2", toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "t", "Translation", num_components=3, toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "r", "Rotation", num_components=3, toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "p", "Pivot", num_components=3, toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "pr", "Pivot Rotation", num_components=3, toolbox=False)
-    template.bindParameter(hou.parmTemplateType.Float,
-        "true_pivot", "True pivot", num_components=3, toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Separator, "sep0",                                           toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Int,       "axis_scale",  "Axis Scale",    default_value=4,  toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Int,       "r_scale",     "R Scale",       default_value=15, toolbox=True)
+    template.bindParameter(hou.parmTemplateType.Int,       "t_scale",     "T Scale",       default_value=1,  toolbox=True)
+    template.bindParameter(hou.parmTemplateType.Int,       "zoom_scale",  "Z Scale",       default_value=2,  toolbox=True)
+    template.bindParameter(hou.parmTemplateType.Separator, "sep1",                                           toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,     "distance",    "Distance",      default_value=10.0)
+    template.bindParameter(hou.parmTemplateType.Float,     "ortho_width", "FOV",           default_value=10.0)
+    template.bindParameter(hou.parmTemplateType.Separator, "sep2",                                           toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,     "t",          "Translation",    num_components=3, toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,     "r",          "Rotation",       num_components=3, toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,     "p",          "Pivot",          num_components=3, toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,     "pr",         "Pivot Rotation", num_components=3, toolbox=False)
+    template.bindParameter(hou.parmTemplateType.Float,     "true_pivot", "True pivot",     num_components=3, toolbox=False)
 
 def createViewerStateTemplate():
-    # Initialize the state template
     template = hou.ViewerStateTemplate(\
       type_name="im_view",
       label="IM View",
@@ -718,13 +662,7 @@ def createViewerStateTemplate():
     make_menu(template)
     make_parameters(template)
 
-    # Bind the state handle(s)
-    # template.bindHandleStatic("xform", "start_handle",
-      # [("startx", "tx"), ("starty", "ty"), ("startz", "tz")])
-
-    # Bind the state icon
     template.bindIcon("DESKTOP_application_sierra")
-    # Bind the state
     template.bindFactory(State)
 
 
