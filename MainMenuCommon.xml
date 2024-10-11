@@ -11,12 +11,12 @@
 
             <label>IM</label>
 
-            <scriptItem id="im_view">
-                <label>IM View</label>
+            <scriptItem id="keycam">
+                <label>keycam</label>
                 <scriptCode>
                 <![CDATA[
 import im_menu_utils
-im_menu_utils.toggle_im_view()
+im_menu_utils.toggle_keycam()
                 ]]>
                 </scriptCode>
             </scriptItem>
@@ -33,12 +33,12 @@ im_menu_utils.open_color_chooser()
 
             <separatorItem/>
 
-            <scriptItem id="reload_im_view">
+            <scriptItem id="reload_keycam">
                 <label>Reload IM View</label>
                 <scriptCode>
                 <![CDATA[
 import im_menu_utils
-im_menu_utils.reload_im_view()
+im_menu_utils.reload_keycam()
                 ]]>
                 </scriptCode>
             </scriptItem>

@@ -31,6 +31,9 @@ def action(uievent):
                 x = math.floor(x) - 0.5
             else: x = math.ceil(x) - 0.5
 
+        elif key == "Ctrl+Shift+A":
+            node.parent().layoutChildren(horizontal_spacing=5, vertical_spacing=5), 
+
         elif key == 'Ctrl+Shift+J':        # Move Node Down
             if round ((y%1), 2) > 0.85:
                 y = math.ceil(y) - 0.15

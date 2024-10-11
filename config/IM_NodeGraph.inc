@@ -37,7 +37,7 @@ GraphNetworkBoxNameText:       		        #76A8E1
 GraphIndirectText:		       		grey9
 GraphIndirectTextDark:		   		grey0
 
-GraphItemBorder:		       		grey0
+GraphItemBorder:		       		red
 GraphMinimizeButton:		   		GREY(0.8)
 
 GraphTemplateFlag:		       		#DD7DD7
@@ -78,11 +78,11 @@ GraphSopRestGeometry:				0.584 0.776 1.0
 GraphSopCapturePose:				0.6 0.6 0.6
 GraphSopAnimatedPose:				1.0 0.725 0.0
 
-GraphConnector:					#916778
+GraphConnector:					#4e4e4e
 GraphConnectorLabel:				GREY(0.70)
 GraphConnectorError:				#CE5E5E
 GraphCopMaskInput:				0.50 0.80 0.50
-GraphWire:					#916778
+GraphWire:					#4e4e4e
 GraphWireUnused:				0.4 0.4 0.4
 GraphWireError:					RED
 GraphWireLoopBack:				0.3 0.3 1.0
