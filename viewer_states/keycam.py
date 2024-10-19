@@ -308,43 +308,44 @@ class State(object):
 
     def cam_xform(s, key):
         s.viewer_log("cam_xform", "important")
-        nd = s.nav_dict
+        nd   = s.nav_dict
+        xm   = nd["xform_mode"]
         type = s.viewport.type()
-        gvt = hou.geometryViewportType
-        if s.viewer.curViewport().type() == gvt.Perspective: # pyright: ignore
+        vp   = nd["viewport"]
+        if vp == "persp1":
             if key in ("Shift+h", "Shift+j", "Shift+k", "Shift+l"):
-                if   nd["xform_mode"] == "rotate":    s.cam_translate(key[-1])
-                elif nd["xform_mode"] == "translate": s.cam_rotate(key[-1])
+                if   xm == "rotate"   : s.cam_translate(key[-1])
+                elif xm == "translate": s.cam_rotate(key[-1])
             elif key in ("h", "j", "k", "l"):
-                if   nd["xform_mode"] == "rotate":    s.cam_rotate(key)
-                elif nd["xform_mode"] == "translate": s.cam_translate(key)
+                if   xm == "rotate"   : s.cam_rotate(key)
+                elif xm == "translate": s.cam_translate(key)
             s.cam_update()
             s.drawable_update_pvt()
             s.drawable_update_ray()
-        elif type == gvt.Top:    s.cam_xform_flat(key, "top")
-        elif type == gvt.Bottom: s.cam_xform_flat(key, "bottom")
-        elif type == gvt.Front:  s.cam_xform_flat(key, "front")
-        elif type == gvt.Back:   s.cam_xform_flat(key, "back")
-        elif type == gvt.Right:  s.cam_xform_flat(key, "right")
-        elif type == gvt.Left:   s.cam_xform_flat(key, "left")
+        elif vp == "top1"   : s.cam_xform_flat(key, "top")
+        elif vp == "bottom1": s.cam_xform_flat(key, "bottom")
+        elif vp == "front1" : s.cam_xform_flat(key, "front")
+        elif vp == "back1"  : s.cam_xform_flat(key, "back")
+        elif vp == "right1" : s.cam_xform_flat(key, "right")
+        elif vp == "left1":  : s.cam_xform_flat(key, "left")
 
     def cam_xform_flat(s, key, view_type):
         s.viewer_log("cam_xform_flat", "important")
         nd = s.nav_dict
         viewport_name = nd["viewport"]
-        viewport_arr =  s.viewer.viewports()
-        name_arr =      [ x.name() for x in viewport_arr ]
-        idx =           name_arr.index(viewport_name)
-        viewport =      viewport_arr[idx]
-        idx_arr =       [0, 0]
-        if   view_type == "top":    idx_arr = [0, 2]
+        viewport_arr  = s.viewer.viewports()
+        name_arr      = [x.name() for x in viewport_arr]
+        idx           = name_arr.index(viewport_name)
+        viewport      = viewport_arr[idx]
+        idx_arr       = [0, 0]
+        if   view_type == "top"   : idx_arr = [0, 2]
         elif view_type == "bottom": idx_arr = [2, 0]
-        elif view_type == "front":  idx_arr = [0, 1]
-        elif view_type == "back":   idx_arr = [1, 0]
-        elif view_type == "right":  idx_arr = [2, 1]
-        elif view_type == "left":   idx_arr = [1, 2]
+        elif view_type == "front" : idx_arr = [0, 1]
+        elif view_type == "back"  : idx_arr = [1, 0]
+        elif view_type == "right" : idx_arr = [2, 1]
+        elif view_type == "left"  : idx_arr = [1, 2]
         cam = viewport.defaultCamera() # pyright: ignore
-        t =  list( cam.translation() )
+        t  = list( cam.translation() )
         ti = s.val_dict["tr"]
         if   key == "h": t[idx_arr[0]] += ti
         elif key == "j": t[idx_arr[1]] += ti
