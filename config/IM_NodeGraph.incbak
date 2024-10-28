@@ -40,13 +40,13 @@ GraphIndirectTextDark:		   		grey0
 GraphItemBorder:		       		red
 GraphMinimizeButton:		   		GREY(0.8)
 
-GraphTemplateFlag:		       		#606060
-GraphSelectableTemplateFlag:   		        #606060
-GraphBypassFlag:		       		#606060
-GraphRenderFlag:		       		#606060
-GraphDisplayFlag:		       		#606060
-GraphOutputFlag:		       		#606060
-GraphSelectableFlag:		   		#606060
+GraphTemplateFlag:		       		#DD7DD7
+GraphSelectableTemplateFlag:   		        #B151BB
+GraphBypassFlag:		       		#E7CD2F
+GraphRenderFlag:		       		#A779FF
+GraphDisplayFlag:		       		#308DFF
+GraphOutputFlag:		       		0.75 0.4 0.0
+GraphSelectableFlag:		   		#ABEA21
 GraphExportFlag:		       		#FFA600
 GraphHiddenFlag:		       		#90BECD
 GraphAudioFlag:			       		0.0 0.5 0.5
@@ -55,16 +55,16 @@ GraphLockFlag:			       		#FF 33 00
 GraphSoftLockFlag:		       		#C4 E3 61
 GraphDebugFlag:			       		#6CC6B2
 GraphMaterialFlag:		       		0.75 0.4 0.0
-GraphDisplayAndRenderFlag:	   		#606060
-GraphDisplayAndOutputFlag:	   		#606060
+GraphDisplayAndRenderFlag:	   		0.00 0.68 0.94
+GraphDisplayAndOutputFlag:	   		0.75 0.45 0.36
 GraphFilterFlag:		       		#55FFC1
 
-GraphDisplayHighlight:				#606060
-GraphExportHighlight:				#606060
-GraphRenderHighlight:				#606060
-GraphOutputHighlight:				#606060
-GraphTemplateHighlight:				#606060
-GraphFilterHighlight:				#606060
+GraphDisplayHighlight:				#44679A
+GraphExportHighlight:				#734670
+GraphRenderHighlight:				#9273CB
+GraphOutputHighlight:				#6B5634
+GraphTemplateHighlight:				#734670
+GraphFilterHighlight:				#298966
 
 GraphDopObjectData:				0.65 0.65 0.65
 GraphDopData:					0.50 0.80 0.50

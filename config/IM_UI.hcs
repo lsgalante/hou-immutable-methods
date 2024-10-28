@@ -8,28 +8,28 @@ Scheme: IM Darker
 
 //
 
-#define GREY(g)					g g g
+#define GREY(g)                         g g g
 
 // Color Palette
 
-#define PRESSED_HIGH			#4A5E73
-#define PRESSED_LOW 			#768EA7
+#define PRESSED_HIGH                    #4A5E73
+#define PRESSED_LOW                     #768EA7
 
-#define EDIT_BG	GREY(0.075)
+#define EDIT_BG                         GREY(0.075)
 
 // ICONS //
 
 IconBrightness:	0.6
 IconContrast:	1
-IconGamma:		1
+IconGamma:	1
 IconSaturation:	0.5
 
 // NEW UI RESOURCES //
 
 // BackColor: if white lines appear, adjust the BorderDark (auto contrast code)
 
-BackColor:					             main_lo
-BorderLight:	                         main_sep
+BackColor:	           main_lo
+BorderLight:	                     main_sep
 BorderDark:		                         main_sep
 
 DialogBlendBG:				             grey0	     // messages, etc
